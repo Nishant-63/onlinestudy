@@ -16,13 +16,16 @@ const StudentRemarks = () => {
   const [classes, setClasses] = useState([]);
 
   useEffect(() => {
+    console.log('🎯 StudentRemarks component mounted');
     loadRemarks();
   }, []);
 
   const loadRemarks = async () => {
     try {
+      console.log('📝 Loading remarks...');
       setLoading(true);
       const response = await remarksAPI.getMyRemarks({ limit: 100 });
+      console.log('📝 Remarks response:', response.data);
       const remarksData = response.data.remarks;
       setRemarks(remarksData);
 

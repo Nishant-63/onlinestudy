@@ -13,6 +13,7 @@ import VideoPlayer from './pages/VideoPlayer';
 import AssignmentDetails from './pages/AssignmentDetails';
 import StudentAssignments from './pages/StudentAssignments';
 import StudentAttendance from './pages/StudentAttendance';
+import StudentRemarks from './pages/StudentRemarks';
 import './App.css';
 
 // Protected Route component
@@ -142,7 +143,7 @@ const AppContent = () => {
             path="/student/remarks" 
             element={
               <ProtectedRoute requireRole="student">
-                <StudentDashboard />
+                <StudentRemarks />
               </ProtectedRoute>
             } 
           />
