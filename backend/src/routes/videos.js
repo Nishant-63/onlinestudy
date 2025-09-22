@@ -8,6 +8,13 @@ const {
   generateThumbnail,
   generateHLS
 } = require('../config/cloudinary');
+const { 
+  generateSignedUploadUrl, 
+  generateMultipartUpload, 
+  generateSignedPartUrl,
+  completeMultipartUpload,
+  generateSignedDownloadUrl 
+} = require('../config/s3');
 const { videoQueue, JOB_TYPES } = require('../config/redis');
 const { authenticateToken, requireTeacher, requireStudent } = require('../middleware/auth');
 const { validateVideoUpload, validateUUID, validatePagination } = require('../middleware/validation');

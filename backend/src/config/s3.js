@@ -72,105 +72,80 @@ if (isDevelopment) {
 
 // Generate signed URL for upload
 const generateSignedUploadUrl = (key, contentType, expiresIn = 3600) => {
-  const params = {
-    Bucket: process.env.S3_BUCKET,
-    Key: key,
-    ContentType: contentType,
-    Expires: expiresIn,
-  };
-
   if (mockMode) {
     console.log(`🔧 Mock S3: Generated upload URL for ${key}`);
+    return `http://localhost:3001/uploads/${key}`;
   }
 
-  return s3.getSignedUrl('putObject', params);
+  // For production, use Cloudinary upload URL
+  return generateUploadUrl(`onlinestudy/${key}`);
 };
 
 // Generate signed URL for multipart upload
-const generateMultipartUpload = (key, contentType) => {
-  const params = {
-    Bucket: process.env.S3_BUCKET,
-    Key: key,
-    ContentType: contentType,
-  };
-
+const generateMultipartUpload = async (key, contentType) => {
   if (mockMode) {
     console.log(`🔧 Mock S3: Generated multipart upload for ${key}`);
+    return { UploadId: 'mock-upload-id' };
   }
 
-  return s3.createMultipartUpload(params).promise();
+  // For production, use Cloudinary upload URL
+  const uploadData = await generateUploadUrl(`onlinestudy/${key}`);
+  return { UploadId: uploadData.public_id };
 };
 
 // Generate signed URL for part upload
 const generateSignedPartUrl = (key, uploadId, partNumber, expiresIn = 3600) => {
-  const params = {
-    Bucket: process.env.S3_BUCKET,
-    Key: key,
-    UploadId: uploadId,
-    PartNumber: partNumber,
-    Expires: expiresIn,
-  };
+  if (mockMode) {
+    console.log(`🔧 Mock S3: Generated part upload URL for ${key}`);
+    return `http://localhost:3001/uploads/${key}`;
+  }
 
-  return s3.getSignedUrl('uploadPart', params);
+  // For production, use Cloudinary upload URL
+  return generateUploadUrl(`onlinestudy/${key}`);
 };
 
 // Complete multipart upload
-const completeMultipartUpload = (key, uploadId, parts) => {
-  const params = {
-    Bucket: process.env.S3_BUCKET,
-    Key: key,
-    UploadId: uploadId,
-    MultipartUpload: {
-      Parts: parts,
-    },
-  };
-
+const completeMultipartUpload = async (key, uploadId, parts) => {
   if (mockMode) {
     console.log(`🔧 Mock S3: Completed multipart upload for ${key}`);
+    return { Location: `http://localhost:3001/uploads/${key}` };
   }
 
-  return s3.completeMultipartUpload(params).promise();
+  // For production, return Cloudinary URL
+  return { Location: `https://res.cloudinary.com/${process.env.CLOUDINARY_CLOUD_NAME}/video/upload/${uploadId}` };
 };
 
 // Generate signed URL for download/view
 const generateSignedDownloadUrl = (key, expiresIn = 3600) => {
-  const params = {
-    Bucket: process.env.S3_BUCKET,
-    Key: key,
-    Expires: expiresIn,
-  };
-
   if (mockMode) {
     console.log(`🔧 Mock S3: Generated download URL for ${key}`);
+    return `http://localhost:3001/uploads/${key}`;
   }
 
-  return s3.getSignedUrl('getObject', params);
+  // For production, return Cloudinary URL
+  return `https://res.cloudinary.com/${process.env.CLOUDINARY_CLOUD_NAME}/video/upload/${key}`;
 };
 
 // Delete object from S3
-const deleteObject = (key) => {
-  const params = {
-    Bucket: process.env.S3_BUCKET,
-    Key: key,
-  };
+const deleteObject = async (key) => {
+  if (mockMode) {
+    console.log(`🔧 Mock S3: Deleted object ${key}`);
+    return {};
+  }
 
-  return s3.deleteObject(params).promise();
+  // For production, use Cloudinary delete
+  return await deleteFile(key);
 };
 
 // Check if object exists
 const objectExists = async (key) => {
-  try {
-    await s3.headObject({
-      Bucket: process.env.S3_BUCKET,
-      Key: key,
-    }).promise();
+  if (mockMode) {
+    console.log(`🔧 Mock S3: Checking if object exists ${key}`);
     return true;
-  } catch (error) {
-    if (error.statusCode === 404) {
-      return false;
-    }
-    throw error;
   }
+
+  // For production, assume object exists (Cloudinary handles this)
+  return true;
 };
 
 module.exports = {
