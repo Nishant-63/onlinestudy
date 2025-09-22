@@ -305,8 +305,44 @@ router.get('/class/:classId', authenticateToken, validateUUID('classId'), valida
     const totalCount = parseInt(countResult.rows[0].count);
     const totalPages = Math.ceil(totalCount / limit);
 
+    // Generate video URLs for each video
+    const videosWithUrls = result.rows.map(video => {
+      let videoUrl = null;
+      let thumbnailUrl = null;
+      
+      if (video.hls_key) {
+        videoUrl = generateSignedDownloadUrl(video.hls_key, 3600);
+      } else if (video.thumbnail_key) {
+        // Check if we're in mock mode (no Cloudinary credentials)
+        const isMockMode = !process.env.CLOUDINARY_CLOUD_NAME || process.env.CLOUDINARY_CLOUD_NAME === 'your-cloud-name';
+        
+        if (isMockMode) {
+          // Use local file serving for mock mode
+          videoUrl = `${process.env.CORS_ORIGIN || 'https://onlinestudy-backend-4u8y.onrender.com'}/api/videos/uploads/${video.thumbnail_key.split('/').pop()}`;
+        } else {
+          videoUrl = generateSignedDownloadUrl(video.thumbnail_key, 3600);
+        }
+      }
+      
+      if (video.thumbnail_key) {
+        const isMockMode = !process.env.CLOUDINARY_CLOUD_NAME || process.env.CLOUDINARY_CLOUD_NAME === 'your-cloud-name';
+        
+        if (isMockMode) {
+          thumbnailUrl = `${process.env.CORS_ORIGIN || 'https://onlinestudy-backend-4u8y.onrender.com'}/api/videos/uploads/${video.thumbnail_key.split('/').pop()}`;
+        } else {
+          thumbnailUrl = generateSignedDownloadUrl(video.thumbnail_key, 3600);
+        }
+      }
+      
+      return {
+        ...video,
+        videoUrl,
+        thumbnailUrl
+      };
+    });
+
     res.json({
-      videos: result.rows,
+      videos: videosWithUrls,
       pagination: {
         page,
         limit,
@@ -364,13 +400,35 @@ router.get('/:id', authenticateToken, validateUUID('id'), async (req, res) => {
     }
 
     // Generate signed URLs
-    const videoUrl = video.hls_key 
-      ? generateSignedDownloadUrl(video.hls_key, 3600) // 1 hour
-      : generateSignedDownloadUrl(video.file_key, 3600);
+    let videoUrl, thumbnailUrl;
+    
+    if (video.hls_key) {
+      videoUrl = generateSignedDownloadUrl(video.hls_key, 3600);
+    } else if (video.file_key) {
+      // Check if we're in mock mode (no Cloudinary credentials)
+      const isMockMode = !process.env.CLOUDINARY_CLOUD_NAME || process.env.CLOUDINARY_CLOUD_NAME === 'your-cloud-name';
+      
+      if (isMockMode) {
+        // Use local file serving for mock mode
+        videoUrl = `${process.env.CORS_ORIGIN || 'https://onlinestudy-backend-4u8y.onrender.com'}/api/videos/uploads/${video.file_key.split('/').pop()}`;
+      } else {
+        videoUrl = generateSignedDownloadUrl(video.file_key, 3600);
+      }
+    } else {
+      videoUrl = null;
+    }
 
-    const thumbnailUrl = video.thumbnail_key 
-      ? generateSignedDownloadUrl(video.thumbnail_key, 3600)
-      : null;
+    if (video.thumbnail_key) {
+      const isMockMode = !process.env.CLOUDINARY_CLOUD_NAME || process.env.CLOUDINARY_CLOUD_NAME === 'your-cloud-name';
+      
+      if (isMockMode) {
+        thumbnailUrl = `${process.env.CORS_ORIGIN || 'https://onlinestudy-backend-4u8y.onrender.com'}/api/videos/uploads/${video.thumbnail_key.split('/').pop()}`;
+      } else {
+        thumbnailUrl = generateSignedDownloadUrl(video.thumbnail_key, 3600);
+      }
+    } else {
+      thumbnailUrl = null;
+    }
 
     res.json({
       video: {
