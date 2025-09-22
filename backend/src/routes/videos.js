@@ -53,7 +53,7 @@ const upload = multer({
 });
 
 // Simple file upload endpoint for development mode
-router.post('/upload-file', upload.single('video'), (req, res) => {
+router.post('/upload-file', upload.single('video'), async (req, res) => {
   try {
     console.log('📁 File upload request received:', {
       body: req.body,
@@ -69,15 +69,42 @@ router.post('/upload-file', upload.single('video'), (req, res) => {
       return res.status(400).json({ error: 'No file uploaded' });
     }
     
-    const fileUrl = `http://localhost:3001/uploads/${req.file.filename}`;
-    console.log('✅ File uploaded successfully:', fileUrl);
+    // Use Cloudinary for file storage
+    const fileKey = req.body.fileKey || `videos/${uuidv4()}/${req.file.originalname}`;
     
-    res.json({
-      success: true,
-      fileUrl: fileUrl,
-      filename: req.file.filename,
-      size: req.file.size
-    });
+    try {
+      // Upload to Cloudinary
+      const uploadResult = await uploadFile(req.file.path, {
+        public_id: fileKey.replace(/\.[^/.]+$/, ""), // Remove file extension
+        resource_type: 'video'
+      });
+      
+      console.log('✅ File uploaded to Cloudinary:', uploadResult);
+      
+      res.json({
+        success: true,
+        fileUrl: uploadResult.secure_url,
+        filename: req.file.filename,
+        size: req.file.size,
+        publicId: uploadResult.public_id
+      });
+    } catch (cloudinaryError) {
+      console.error('❌ Cloudinary upload error:', cloudinaryError);
+      
+      // Fallback to local file URL
+      const fileUrl = process.env.NODE_ENV === 'production' 
+        ? `https://onlinestudy-backend-4u8y.onrender.com/api/videos/uploads/${req.file.filename}`
+        : `http://localhost:3001/uploads/${req.file.filename}`;
+      
+      console.log('✅ File uploaded locally:', fileUrl);
+      
+      res.json({
+        success: true,
+        fileUrl: fileUrl,
+        filename: req.file.filename,
+        size: req.file.size
+      });
+    }
   } catch (error) {
     console.error('❌ File upload error:', error);
     res.status(500).json({ error: 'Failed to upload file' });
