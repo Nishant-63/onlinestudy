@@ -2,7 +2,7 @@ const cloudinary = require('cloudinary').v2;
 require('dotenv').config();
 
 // Check if we're in development mode or missing Cloudinary credentials
-const isDevelopment = process.env.NODE_ENV === 'development' && 
+const isDevelopment = process.env.NODE_ENV === 'development' || 
   (!process.env.CLOUDINARY_CLOUD_NAME || process.env.CLOUDINARY_CLOUD_NAME === 'your-cloud-name');
 
 let cloudinaryConfig;
