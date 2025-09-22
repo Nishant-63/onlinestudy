@@ -286,7 +286,7 @@ router.get('/class/:classId', authenticateToken, validateUUID('classId'), valida
 
     // Get videos
     const result = await pool.query(
-      `SELECT v.id, v.title, v.description, v.file_size, v.duration, 
+      `SELECT v.id, v.title, v.description, v.file_key, v.file_size, v.duration, 
               v.thumbnail_key, v.hls_key, v.created_at,
               u.first_name as teacher_first_name, u.last_name as teacher_last_name
        FROM videos v
@@ -312,15 +312,15 @@ router.get('/class/:classId', authenticateToken, validateUUID('classId'), valida
       
       if (video.hls_key) {
         videoUrl = generateSignedDownloadUrl(video.hls_key, 3600);
-      } else if (video.thumbnail_key) {
+      } else if (video.file_key) {
         // Check if we're in mock mode (no Cloudinary credentials)
         const isMockMode = !process.env.CLOUDINARY_CLOUD_NAME || process.env.CLOUDINARY_CLOUD_NAME === 'your-cloud-name';
         
         if (isMockMode) {
           // Use local file serving for mock mode
-          videoUrl = `${process.env.CORS_ORIGIN || 'https://onlinestudy-backend-4u8y.onrender.com'}/api/videos/uploads/${video.thumbnail_key.split('/').pop()}`;
+          videoUrl = `${process.env.CORS_ORIGIN || 'https://onlinestudy-backend-4u8y.onrender.com'}/api/videos/uploads/${video.file_key.split('/').pop()}`;
         } else {
-          videoUrl = generateSignedDownloadUrl(video.thumbnail_key, 3600);
+          videoUrl = generateSignedDownloadUrl(video.file_key, 3600);
         }
       }
       
