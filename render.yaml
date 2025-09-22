@@ -1,0 +1,58 @@
+# Render Configuration File
+# This file helps Render understand your project structure
+
+services:
+  # Backend API Service
+  - type: web
+    name: onlinestudy-backend
+    env: node
+    plan: free
+    buildCommand: cd backend && npm install
+    startCommand: cd backend && npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3001
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_EXPIRES_IN
+        value: 7d
+      - key: CORS_ORIGIN
+        value: https://onlinestudy-frontend.onrender.com
+      - key: MAX_FILE_SIZE
+        value: 10737418240
+      - key: ALLOWED_VIDEO_TYPES
+        value: video/mp4,video/avi,video/mov,video/quicktime
+      - key: ALLOWED_DOCUMENT_TYPES
+        value: application/pdf
+      - key: VIDEO_PROCESSING_ENABLED
+        value: true
+      - key: THUMBNAIL_GENERATION_ENABLED
+        value: true
+
+  # Frontend Static Site
+  - type: web
+    name: onlinestudy-frontend
+    env: static
+    plan: free
+    buildCommand: cd frontend && npm install && npm run build
+    staticPublishPath: frontend/build
+    envVars:
+      - key: REACT_APP_API_URL
+        value: https://onlinestudy-backend.onrender.com
+      - key: REACT_APP_ENVIRONMENT
+        value: production
+
+  # PostgreSQL Database
+  - type: pserv
+    name: onlinestudy-db
+    plan: free
+    databaseName: onlinestudy
+    user: onlinestudy_user
+
+  # Redis Cache
+  - type: redis
+    name: onlinestudy-redis
+    plan: free
+

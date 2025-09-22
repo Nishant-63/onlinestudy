@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { attendanceAPI } from '../services/api';
 import { toast } from 'react-toastify';
+import { Icon } from '../components/Icons';
 
 const StudentAttendance = () => {
   const { user } = useAuth();
@@ -61,16 +62,16 @@ const StudentAttendance = () => {
 
   const getStatusBadge = (status) => {
     const statusConfig = {
-      present: { class: 'status-present', icon: '✅', text: 'Present' },
-      absent: { class: 'status-absent', icon: '❌', text: 'Absent' },
-      late: { class: 'status-late', icon: '⏰', text: 'Late' }
+      present: { class: 'status-present', icon: 'present', text: 'Present' },
+      absent: { class: 'status-absent', icon: 'absent', text: 'Absent' },
+      late: { class: 'status-late', icon: 'late', text: 'Late' }
     };
 
     const config = statusConfig[status] || statusConfig.absent;
     
     return (
       <span className={`status-badge ${config.class}`}>
-        {config.icon} {config.text}
+<Icon name={config.icon} size={16} style={{ marginRight: '4px' }} />{config.text}
       </span>
     );
   };
@@ -111,14 +112,14 @@ const StudentAttendance = () => {
     <div className="main-content">
       <div className="attendance-overview">
         <div className="page-header">
-          <h1 className="page-title">📊 My Attendance</h1>
+          <h1 className="page-title"><Icon name="attendance" size={24} style={{ marginRight: '8px' }} />My Attendance</h1>
           <p className="page-subtitle">Track your attendance records across all enrolled classes</p>
         </div>
 
         {/* Statistics Cards */}
         <div className="attendance-stats">
           <div className="stat-card">
-            <div className="stat-icon">📅</div>
+            <div className="stat-icon"><Icon name="calendar" size={20} /></div>
             <div className="stat-content">
               <h3>Total Days</h3>
               <div className="stat-value">{stats.totalDays}</div>
@@ -126,7 +127,7 @@ const StudentAttendance = () => {
           </div>
           
           <div className="stat-card">
-            <div className="stat-icon">✅</div>
+            <div className="stat-icon"><Icon name="present" size={20} /></div>
             <div className="stat-content">
               <h3>Present</h3>
               <div className="stat-value text-green-600">{stats.presentDays}</div>
@@ -134,7 +135,7 @@ const StudentAttendance = () => {
           </div>
           
           <div className="stat-card">
-            <div className="stat-icon">❌</div>
+            <div className="stat-icon"><Icon name="absent" size={20} /></div>
             <div className="stat-content">
               <h3>Absent</h3>
               <div className="stat-value text-red-600">{stats.absentDays}</div>
@@ -142,7 +143,7 @@ const StudentAttendance = () => {
           </div>
           
           <div className="stat-card">
-            <div className="stat-icon">⏰</div>
+            <div className="stat-icon"><Icon name="late" size={20} /></div>
             <div className="stat-content">
               <h3>Late</h3>
               <div className="stat-value text-yellow-600">{stats.lateDays}</div>
@@ -150,7 +151,7 @@ const StudentAttendance = () => {
           </div>
           
           <div className="stat-card highlight">
-            <div className="stat-icon">📈</div>
+            <div className="stat-icon"><Icon name="trending" size={20} /></div>
             <div className="stat-content">
               <h3>Attendance %</h3>
               <div className={`stat-value ${getAttendancePercentageColor(stats.attendancePercentage)}`}>
@@ -184,7 +185,7 @@ const StudentAttendance = () => {
           
           {filteredAttendance.length === 0 ? (
             <div className="empty-state">
-              <div className="empty-icon">📊</div>
+              <div className="empty-icon"><Icon name="attendance" size={48} /></div>
               <h3>No attendance records</h3>
               <p>
                 {selectedClass === 'all' 
@@ -200,7 +201,7 @@ const StudentAttendance = () => {
                   <div className="attendance-header">
                     <div className="attendance-date">
                       <h3>{formatDate(record.date)}</h3>
-                      <span className="class-name">📚 {record.class_name}</span>
+                      <span className="class-name"><Icon name="classes" size={16} style={{ marginRight: '4px' }} />{record.class_name}</span>
                     </div>
                     <div className="attendance-status">
                       {getStatusBadge(record.status)}
@@ -247,12 +248,12 @@ const StudentAttendance = () => {
                 )}
                 {stats.attendancePercentage >= 75 && stats.attendancePercentage < 90 && (
                   <p className="summary-message warning">
-                    📈 Good attendance! Try to improve a bit more.
+                    <Icon name="trending" size={16} style={{ marginRight: '4px' }} />Good attendance! Try to improve a bit more.
                   </p>
                 )}
                 {stats.attendancePercentage < 75 && (
                   <p className="summary-message error">
-                    ⚠️ Your attendance needs improvement. Please try to attend more classes.
+                    <Icon name="warning" size={16} style={{ marginRight: '4px' }} />Your attendance needs improvement. Please try to attend more classes.
                   </p>
                 )}
               </div>

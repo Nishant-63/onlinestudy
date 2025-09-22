@@ -2,13 +2,13 @@ const { Queue, Worker } = require('bullmq');
 const Redis = require('ioredis');
 require('dotenv').config();
 
-// Check if we're in development mode without Redis
-const isDevelopment = process.env.NODE_ENV === 'development';
+// Check if Redis is available
+const hasRedisUrl = process.env.REDIS_URL && process.env.REDIS_URL !== '';
 let redisConnection;
 let videoQueue;
 
-if (isDevelopment) {
-  console.log('🔧 Running in development mode with mock Redis configuration');
+if (!hasRedisUrl) {
+  console.log('🔧 Running without Redis - using mock configuration');
   
   // Mock Redis connection
   redisConnection = {
@@ -25,11 +25,10 @@ if (isDevelopment) {
     close: () => Promise.resolve(),
   };
 } else {
+  console.log('🔧 Connecting to Redis...');
+  
   // Real Redis connection
-  redisConnection = new Redis({
-    host: process.env.REDIS_HOST || 'localhost',
-    port: process.env.REDIS_PORT || 6379,
-    password: process.env.REDIS_PASSWORD || undefined,
+  redisConnection = new Redis(process.env.REDIS_URL, {
     maxRetriesPerRequest: 3,
   });
 

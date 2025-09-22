@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { classesAPI } from '../services/api';
 import { toast } from 'react-toastify';
+import { Icon } from '../components/Icons';
 import CreateClassModal from '../components/modals/CreateClassModal';
 import '../components/modals/Modal.css';
 
@@ -47,7 +48,7 @@ const ClassesOverview = () => {
     <div className="main-content">
       <div className="classes-overview">
         <div className="page-header">
-          <h1 className="page-title">📚 {user.role === 'teacher' ? 'My Classes' : 'My Classes'}</h1>
+          <h1 className="page-title"><Icon name="classes" size={24} style={{ marginRight: '8px' }} />{user.role === 'teacher' ? 'My Classes' : 'My Classes'}</h1>
           <p className="page-subtitle">
             {user.role === 'teacher' 
               ? 'Manage your classes and view detailed information' 
@@ -67,7 +68,7 @@ const ClassesOverview = () => {
         <div className="classes-grid">
           {classes.length === 0 ? (
             <div className="empty-state">
-              <div className="empty-icon">📚</div>
+              <div className="empty-icon"><Icon name="classes" size={48} /></div>
               <h3>{user.role === 'teacher' ? 'No classes yet' : 'No enrolled classes'}</h3>
               <p>
                 {user.role === 'teacher' 
@@ -93,10 +94,10 @@ const ClassesOverview = () => {
                     {user.role === 'teacher' ? (
                       <>
                         <span className="stat">
-                          👥 {classItem.student_count || 0} students
+                          <Icon name="students" size={16} style={{ marginRight: '4px' }} />{classItem.student_count || 0} students
                         </span>
                         <span className="stat">
-                          🎥 {classItem.video_count || 0} videos
+                          <Icon name="videos" size={16} style={{ marginRight: '4px' }} />{classItem.video_count || 0} videos
                         </span>
                       </>
                     ) : (
@@ -105,10 +106,10 @@ const ClassesOverview = () => {
                           👨‍🏫 {classItem.teacher_first_name} {classItem.teacher_last_name}
                         </span>
                         <span className="stat">
-                          🎥 {classItem.video_count || 0} videos
+                          <Icon name="videos" size={16} style={{ marginRight: '4px' }} />{classItem.video_count || 0} videos
                         </span>
                         <span className="stat">
-                          📝 {classItem.assignment_count || 0} assignments
+                          <Icon name="assignments" size={16} style={{ marginRight: '4px' }} />{classItem.assignment_count || 0} assignments
                         </span>
                       </>
                     )}

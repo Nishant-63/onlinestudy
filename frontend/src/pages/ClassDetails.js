@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { classesAPI, videosAPI, assignmentsAPI } from '../services/api';
 import { toast } from 'react-toastify';
+import { Icon } from '../components/Icons';
 import AddStudentModal from '../components/modals/AddStudentModal';
 import UploadVideoModal from '../components/modals/UploadVideoModal';
 import CreateAssignmentModal from '../components/modals/CreateAssignmentModal';
@@ -117,13 +118,13 @@ const ClassDetails = () => {
               className="btn btn-primary"
               onClick={() => setShowUploadVideoModal(true)}
             >
-              🎥 Upload Video
+<Icon name="video" size={16} style={{ marginRight: '6px' }} />Upload Video
             </button>
             <button
               className="btn btn-primary"
               onClick={() => setShowCreateAssignmentModal(true)}
             >
-              📝 Add Assignment
+<Icon name="createAssignment" size={16} style={{ marginRight: '6px' }} />Add Assignment
             </button>
           </div>
         )}
@@ -158,7 +159,7 @@ const ClassDetails = () => {
             <div className="videos-section">
               {videos.length === 0 ? (
                 <div className="empty-state">
-                  <div className="empty-icon">🎥</div>
+                  <div className="empty-icon"><Icon name="videos" size={48} /></div>
                   <h3>No videos yet</h3>
                   <p>Upload your first video to get started</p>
                   {user.role === 'teacher' && (
@@ -179,7 +180,7 @@ const ClassDetails = () => {
                           <img src={video.thumbnailUrl} alt={video.title} />
                         ) : (
                           <div className="video-placeholder">
-                            <span>🎥</span>
+                            <Icon name="video" size={16} />
                           </div>
                         )}
                         <div className="video-duration">
@@ -215,7 +216,7 @@ const ClassDetails = () => {
               
               {students.length === 0 ? (
                 <div className="empty-state">
-                  <div className="empty-icon">👥</div>
+                  <div className="empty-icon"><Icon name="students" size={48} /></div>
                   <h3>No students enrolled</h3>
                   <p>Add students to this class to get started</p>
                   <button
@@ -262,7 +263,7 @@ const ClassDetails = () => {
             <div className="assignments-section">
               {assignments.length === 0 ? (
                 <div className="empty-state">
-                  <div className="empty-icon">📝</div>
+                  <div className="empty-icon"><Icon name="assignments" size={48} /></div>
                   <h3>No assignments yet</h3>
                   <p>Create your first assignment to get started</p>
                   {user.role === 'teacher' && (

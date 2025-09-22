@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { Icon } from './Icons';
 import './Navbar.css';
 
 const Navbar = () => {
@@ -51,17 +52,20 @@ const Navbar = () => {
             <>
               <li>
                 <Link to="/" className="nav-link">
-                  📊 Dashboard
+                  <Icon name="dashboard" size={18} style={{ marginRight: '8px' }} />
+                  Dashboard
                 </Link>
               </li>
               <li>
                 <Link to="/teacher/classes" className="nav-link">
-                  📚 Classes
+                  <Icon name="classes" size={18} style={{ marginRight: '8px' }} />
+                  Classes
                 </Link>
               </li>
               <li>
                 <Link to="/teacher/students" className="nav-link">
-                  👥 Students
+                  <Icon name="students" size={18} style={{ marginRight: '8px' }} />
+                  Students
                 </Link>
               </li>
             </>
@@ -69,17 +73,20 @@ const Navbar = () => {
             <>
               <li>
                 <Link to="/student/classes" className="nav-link">
-                  📚 My Classes
+                  <Icon name="classes" size={18} style={{ marginRight: '8px' }} />
+                  My Classes
                 </Link>
               </li>
               <li>
                 <Link to="/student/assignments" className="nav-link">
-                  📝 Assignments
+                  <Icon name="assignments" size={18} style={{ marginRight: '8px' }} />
+                  Assignments
                 </Link>
               </li>
               <li>
                 <Link to="/student/attendance" className="nav-link">
-                  📊 Attendance
+                  <Icon name="attendance" size={18} style={{ marginRight: '8px' }} />
+                  Attendance
                 </Link>
               </li>
             </>
@@ -106,7 +113,8 @@ const Navbar = () => {
               className="btn btn-outline"
               onClick={() => setShowUserMenu(!showUserMenu)}
             >
-              ⚙️ Menu
+              <Icon name="menu" size={16} style={{ marginRight: '6px' }} />
+              Menu
             </button>
             
             {showUserMenu && (
@@ -118,7 +126,8 @@ const Navbar = () => {
                     // Add profile/settings functionality
                   }}
                 >
-                  👤 Profile
+                  <Icon name="profile" size={16} style={{ marginRight: '6px' }} />
+                  Profile
                 </button>
                 <button
                   className="dropdown-item"
@@ -127,7 +136,8 @@ const Navbar = () => {
                     handleLogout();
                   }}
                 >
-                  🚪 Logout
+                  <Icon name="logout" size={16} style={{ marginRight: '6px' }} />
+                  Logout
                 </button>
               </div>
             )}

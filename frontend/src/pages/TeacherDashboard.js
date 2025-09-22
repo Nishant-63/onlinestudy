@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { classesAPI, usersAPI } from '../services/api';
 import { toast } from 'react-toastify';
+import { Icon } from '../components/Icons';
 import CreateClassModal from '../components/modals/CreateClassModal';
 import UploadVideoModal from '../components/modals/UploadVideoModal';
 import CreateAssignmentModal from '../components/modals/CreateAssignmentModal';
@@ -140,19 +141,19 @@ const TeacherDashboard = () => {
         {/* Stats Cards */}
         <div className="dashboard-stats fade-in">
           <div className="stat-card">
-            <h3>📚 Total Classes</h3>
+            <h3><Icon name="classes" size={20} style={{ marginRight: '8px' }} />Total Classes</h3>
             <div className="value">{stats.totalClasses}</div>
           </div>
           <div className="stat-card">
-            <h3>👥 Total Students</h3>
+            <h3><Icon name="students" size={20} style={{ marginRight: '8px' }} />Total Students</h3>
             <div className="value">{stats.totalStudents}</div>
           </div>
           <div className="stat-card">
-            <h3>⏳ Pending Approvals</h3>
+            <h3><Icon name="warning" size={20} style={{ marginRight: '8px' }} />Pending Approvals</h3>
             <div className="value">{stats.pendingApprovals}</div>
           </div>
           <div className="stat-card">
-            <h3>🎥 Total Videos</h3>
+            <h3><Icon name="videos" size={20} style={{ marginRight: '8px' }} />Total Videos</h3>
             <div className="value">{stats.totalVideos}</div>
           </div>
         </div>
@@ -210,7 +211,7 @@ const TeacherDashboard = () => {
           {/* Recent Classes */}
           <div className="card slide-in">
             <div className="card-header">
-              <h2 className="card-title">📚 Recent Classes</h2>
+              <h2 className="card-title"><Icon name="classes" size={20} style={{ marginRight: '8px' }} />Recent Classes</h2>
               <button 
                 className="btn btn-primary"
                 onClick={() => {
@@ -266,14 +267,14 @@ const TeacherDashboard = () => {
           {/* Quick Actions */}
           <div className="card slide-in">
             <div className="card-header">
-              <h2 className="card-title">⚡ Quick Actions</h2>
+              <h2 className="card-title"><Icon name="quickActions" size={20} style={{ marginRight: '8px' }} />Quick Actions</h2>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
               <button 
                 className="quick-action-card"
                 onClick={() => setShowCreateClassModal(true)}
               >
-                <div className="quick-action-icon">📚</div>
+                <div className="quick-action-icon"><Icon name="classes" size={24} /></div>
                 <div className="quick-action-title">Create Class</div>
                 <div className="quick-action-description">
                   Set up a new class for your students
@@ -284,7 +285,7 @@ const TeacherDashboard = () => {
                 className="quick-action-card"
                 onClick={() => setShowUploadVideoModal(true)}
               >
-                <div className="quick-action-icon">🎥</div>
+                <div className="quick-action-icon"><Icon name="video" size={24} /></div>
                 <div className="quick-action-title">Upload Video</div>
                 <div className="quick-action-description">
                   Add a new video lecture
@@ -295,7 +296,7 @@ const TeacherDashboard = () => {
                 className="quick-action-card"
                 onClick={() => setShowCreateAssignmentModal(true)}
               >
-                <div className="quick-action-icon">📝</div>
+                <div className="quick-action-icon"><Icon name="createAssignment" size={24} /></div>
                 <div className="quick-action-title">Create Assignment</div>
                 <div className="quick-action-description">
                   Upload notes or create assignments
@@ -306,7 +307,7 @@ const TeacherDashboard = () => {
                 className="quick-action-card"
                 onClick={() => setShowMarkAttendanceModal(true)}
               >
-                <div className="quick-action-icon">📊</div>
+                <div className="quick-action-icon"><Icon name="attendance" size={24} /></div>
                 <div className="quick-action-title">Mark Attendance</div>
                 <div className="quick-action-description">
                   Record student attendance

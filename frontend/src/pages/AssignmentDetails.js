@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { assignmentsAPI } from '../services/api';
 import { toast } from 'react-toastify';
+import { Icon } from '../components/Icons';
 
 const AssignmentDetails = () => {
   const { id } = useParams();
@@ -93,7 +94,7 @@ const AssignmentDetails = () => {
               <h2>Submit Your Work</h2>
               <div className="submission-area">
                 <div className="file-upload">
-                  <div className="file-upload-icon">📎</div>
+                  <div className="file-upload-icon"><Icon name="attach" size={20} /></div>
                   <div className="file-upload-text">
                     Drag and drop your PDF here, or click to browse
                   </div>

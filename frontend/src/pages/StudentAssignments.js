@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { assignmentsAPI } from '../services/api';
 import { toast } from 'react-toastify';
+import { Icon } from '../components/Icons';
 
 const StudentAssignments = () => {
   const { user } = useAuth();
@@ -143,14 +144,14 @@ const StudentAssignments = () => {
     <div className="main-content">
       <div className="assignments-overview">
         <div className="page-header">
-          <h1 className="page-title">📝 My Assignments</h1>
+          <h1 className="page-title"><Icon name="assignments" size={24} style={{ marginRight: '8px' }} />My Assignments</h1>
           <p className="page-subtitle">View and submit your assignments from all enrolled classes</p>
         </div>
 
         <div className="assignments-list">
           {assignments.length === 0 ? (
             <div className="empty-state">
-              <div className="empty-icon">📝</div>
+              <div className="empty-icon"><Icon name="assignments" size={48} /></div>
               <h3>No assignments yet</h3>
               <p>You don't have any assignments from your enrolled classes</p>
             </div>
@@ -161,13 +162,13 @@ const StudentAssignments = () => {
                   <div className="assignment-title-section">
                     <h3 className="assignment-title">{assignment.title}</h3>
                     <div className="assignment-meta">
-                      <span className="class-name">📚 {assignment.class_name}</span>
+                      <span className="class-name"><Icon name="classes" size={16} style={{ marginRight: '4px' }} />{assignment.class_name}</span>
                       <span className="teacher-name">
                         👨‍🏫 {assignment.teacher_first_name} {assignment.teacher_last_name}
                       </span>
                       {assignment.due_date && (
                         <span className="due-date">
-                          📅 Due: {new Date(assignment.due_date).toLocaleDateString()}
+                          <Icon name="calendar" size={16} style={{ marginRight: '4px' }} />Due: {new Date(assignment.due_date).toLocaleDateString()}
                         </span>
                       )}
                     </div>
@@ -195,7 +196,7 @@ const StudentAssignments = () => {
                     <div className="detail-item">
                       <span className="detail-label">Your Submission:</span>
                       <span className="detail-value">
-                        📎 {assignment.title}_submission.pdf ({formatFileSize(assignment.submission_file_size)})
+                        <Icon name="attach" size={16} style={{ marginRight: '4px' }} />{assignment.title}_submission.pdf ({formatFileSize(assignment.submission_file_size)})
                       </span>
                     </div>
                   )}
@@ -231,11 +232,11 @@ const StudentAssignments = () => {
                         <label htmlFor={`file-${assignment.id}`} className="file-upload-label">
                           {selectedFile[assignment.id] ? (
                             <span className="file-selected">
-                              📎 {selectedFile[assignment.id].name} ({formatFileSize(selectedFile[assignment.id].size)})
+                              <Icon name="attach" size={16} style={{ marginRight: '4px' }} />{selectedFile[assignment.id].name} ({formatFileSize(selectedFile[assignment.id].size)})
                             </span>
                           ) : (
                             <span className="file-upload-text">
-                              📎 Choose PDF file (max 500MB)
+                              <Icon name="attach" size={16} style={{ marginRight: '4px' }} />Choose PDF file (max 500MB)
                             </span>
                           )}
                         </label>

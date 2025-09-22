@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { classesAPI, videosAPI } from '../../services/api';
 import { toast } from 'react-toastify';
+import { Icon } from '../Icons';
 
 const UploadVideoModal = ({ isOpen, onClose, onSuccess }) => {
   const [classes, setClasses] = useState([]);
@@ -238,7 +239,7 @@ const UploadVideoModal = ({ isOpen, onClose, onSuccess }) => {
               <label htmlFor="videoFile" className="file-upload-label">
                 {selectedFile ? (
                   <div className="file-selected">
-                    <div className="file-icon">🎥</div>
+                    <div className="file-icon"><Icon name="video" size={24} /></div>
                     <div className="file-info">
                       <div className="file-name">{selectedFile.name}</div>
                       <div className="file-size">{formatFileSize(selectedFile.size)}</div>
@@ -246,7 +247,7 @@ const UploadVideoModal = ({ isOpen, onClose, onSuccess }) => {
                   </div>
                 ) : (
                   <div className="file-upload-text">
-                    <div className="upload-icon">📁</div>
+                    <div className="upload-icon"><Icon name="folder" size={24} /></div>
                     <div className="upload-text">Choose video file (max 10GB)</div>
                     <div className="upload-hint">Supports MP4, AVI, MOV, and other video formats</div>
                   </div>
@@ -277,14 +278,14 @@ const UploadVideoModal = ({ isOpen, onClose, onSuccess }) => {
           {/* Upload Status */}
           {uploadStatus === 'completed' && (
             <div className="upload-status success">
-              <div className="status-icon">✅</div>
+              <div className="status-icon"><Icon name="present" size={20} /></div>
               <div className="status-text">Video uploaded successfully!</div>
             </div>
           )}
 
           {uploadStatus === 'error' && (
             <div className="upload-status error">
-              <div className="status-icon">❌</div>
+              <div className="status-icon"><Icon name="absent" size={20} /></div>
               <div className="status-text">Upload failed. Please try again.</div>
             </div>
           )}

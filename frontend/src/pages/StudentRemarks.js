@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { remarksAPI } from '../services/api';
 import { toast } from 'react-toastify';
+import { Icon } from '../components/Icons';
 
 const StudentRemarks = () => {
   const { user } = useAuth();
@@ -99,15 +100,15 @@ const StudentRemarks = () => {
   const getRemarkType = (remark) => {
     const content = remark.content.toLowerCase();
     if (content.includes('excellent') || content.includes('great') || content.includes('outstanding') || content.includes('amazing')) {
-      return { type: 'positive', icon: '🌟', color: 'text-green-600' };
+      return { type: 'positive', icon: 'star', color: 'text-green-600' };
     } else if (content.includes('good') || content.includes('well done') || content.includes('nice') || content.includes('keep it up')) {
-      return { type: 'encouraging', icon: '👍', color: 'text-blue-600' };
+      return { type: 'encouraging', icon: 'thumbsUp', color: 'text-blue-600' };
     } else if (content.includes('improve') || content.includes('better') || content.includes('work on') || content.includes('focus')) {
-      return { type: 'constructive', icon: '💡', color: 'text-yellow-600' };
+      return { type: 'constructive', icon: 'lightbulb', color: 'text-yellow-600' };
     } else if (content.includes('concern') || content.includes('worry') || content.includes('issue') || content.includes('problem')) {
-      return { type: 'concern', icon: '⚠️', color: 'text-orange-600' };
+      return { type: 'concern', icon: 'warning', color: 'text-orange-600' };
     } else {
-      return { type: 'general', icon: '💬', color: 'text-gray-600' };
+      return { type: 'general', icon: 'chat', color: 'text-gray-600' };
     }
   };
 
@@ -125,14 +126,14 @@ const StudentRemarks = () => {
     <div className="main-content">
       <div className="remarks-overview">
         <div className="page-header">
-          <h1 className="page-title">💬 Teacher Remarks</h1>
+          <h1 className="page-title"><Icon name="chat" size={24} style={{ marginRight: '8px' }} />Teacher Remarks</h1>
           <p className="page-subtitle">View feedback and remarks from your teachers</p>
         </div>
 
         {/* Statistics Cards */}
         <div className="remarks-stats">
           <div className="stat-card">
-            <div className="stat-icon">💬</div>
+            <div className="stat-icon"><Icon name="chat" size={20} /></div>
             <div className="stat-content">
               <h3>Total Remarks</h3>
               <div className="stat-value">{stats.totalRemarks}</div>
@@ -140,7 +141,7 @@ const StudentRemarks = () => {
           </div>
           
           <div className="stat-card">
-            <div className="stat-icon">🕒</div>
+            <div className="stat-icon"><Icon name="calendar" size={20} /></div>
             <div className="stat-content">
               <h3>Recent (30 days)</h3>
               <div className="stat-value text-blue-600">{stats.recentRemarks}</div>
@@ -148,7 +149,7 @@ const StudentRemarks = () => {
           </div>
           
           <div className="stat-card">
-            <div className="stat-icon">📚</div>
+            <div className="stat-icon"><Icon name="classes" size={20} /></div>
             <div className="stat-content">
               <h3>Classes</h3>
               <div className="stat-value text-purple-600">{stats.classCount}</div>
@@ -180,7 +181,7 @@ const StudentRemarks = () => {
           
           {filteredRemarks.length === 0 ? (
             <div className="empty-state">
-              <div className="empty-icon">💬</div>
+              <div className="empty-icon"><Icon name="chat" size={48} /></div>
               <h3>No remarks yet</h3>
               <p>
                 {selectedClass === 'all' 
@@ -198,19 +199,19 @@ const StudentRemarks = () => {
                     <div className="remark-header">
                       <div className="remark-meta">
                         <div className="remark-teacher">
-                          <span className="teacher-icon">👨‍🏫</span>
+                          <span className="teacher-icon"><Icon name="profile" size={16} /></span>
                           <span className="teacher-name">
                             {remark.teacher_first_name} {remark.teacher_last_name}
                           </span>
                         </div>
                         <div className="remark-class">
-                          <span className="class-icon">📚</span>
+                          <span className="class-icon"><Icon name="classes" size={16} /></span>
                           <span className="class-name">{remark.class_name || 'General'}</span>
                         </div>
                       </div>
                       <div className="remark-type">
                         <span className={`remark-type-badge ${remarkType.color}`}>
-                          {remarkType.icon} {remarkType.type}
+<Icon name={remarkType.icon} size={14} style={{ marginRight: '4px' }} />{remarkType.type}
                         </span>
                       </div>
                     </div>
@@ -221,7 +222,7 @@ const StudentRemarks = () => {
                     
                     <div className="remark-footer">
                       <div className="remark-date">
-                        <span className="date-icon">📅</span>
+                        <span className="date-icon"><Icon name="calendar" size={14} /></span>
                         <span className="date-text">{formatDate(remark.created_at)}</span>
                       </div>
                       <div className="remark-relative-time">
@@ -250,7 +251,7 @@ const StudentRemarks = () => {
                 </p>
                 {stats.totalRemarks > 0 && (
                   <p className="summary-message info">
-                    💡 Keep engaging with your teachers and implementing their feedback to improve your learning experience!
+                    <Icon name="lightbulb" size={16} style={{ marginRight: '4px' }} />Keep engaging with your teachers and implementing their feedback to improve your learning experience!
                   </p>
                 )}
               </div>
