@@ -5,6 +5,8 @@
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",
+    "start:prod": "node start-production.js",
+    "start:migrate": "node start-with-migration.js",
     "dev": "nodemon src/server.js",
     "test": "jest",
     "test:watch": "jest --watch",
