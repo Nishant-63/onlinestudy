@@ -8,6 +8,11 @@ const { authenticateToken } = require('../middleware/auth');
 
 const router = express.Router();
 
+// Test endpoint
+router.get('/test', (req, res) => {
+  res.json({ message: 'Auth routes are working!', timestamp: new Date().toISOString() });
+});
+
 // Generate JWT tokens
 const generateTokens = (userId) => {
   const accessToken = jwt.sign(
@@ -18,8 +23,8 @@ const generateTokens = (userId) => {
 
   const refreshToken = jwt.sign(
     { id: userId, type: 'refresh' },
-    process.env.JWT_REFRESH_SECRET,
-    { expiresIn: process.env.JWT_REFRESH_EXPIRES_IN || '7d' }
+    process.env.JWT_SECRET, // Use same secret for simplicity
+    { expiresIn: process.env.JWT_EXPIRES_IN || '7d' }
   );
 
   return { accessToken, refreshToken };
@@ -146,7 +151,7 @@ router.post('/refresh', async (req, res) => {
     }
 
     // Verify refresh token
-    const decoded = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET);
+    const decoded = jwt.verify(refreshToken, process.env.JWT_SECRET);
     
     if (decoded.type !== 'refresh') {
       return res.status(401).json({ error: 'Invalid refresh token' });
