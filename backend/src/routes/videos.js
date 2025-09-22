@@ -2,12 +2,12 @@ const express = require('express');
 const { v4: uuidv4 } = require('uuid');
 const pool = require('../config/database');
 const { 
-  generateSignedUploadUrl, 
-  generateMultipartUpload, 
-  generateSignedPartUrl,
-  completeMultipartUpload,
-  generateSignedDownloadUrl 
-} = require('../config/s3');
+  generateUploadUrl,
+  uploadFile,
+  deleteFile,
+  generateThumbnail,
+  generateHLS
+} = require('../config/cloudinary');
 const { videoQueue, JOB_TYPES } = require('../config/redis');
 const { authenticateToken, requireTeacher, requireStudent } = require('../middleware/auth');
 const { validateVideoUpload, validateUUID, validatePagination } = require('../middleware/validation');

@@ -1,9 +1,9 @@
-const AWS = require('aws-sdk');
+const { cloudinary, generateUploadUrl, uploadFile, deleteFile } = require('./cloudinary');
 require('dotenv').config();
 
-// Check if we're in development mode with placeholder S3 credentials
+// Check if we're in development mode or missing Cloudinary credentials
 const isDevelopment = process.env.NODE_ENV === 'development' && 
-  (process.env.S3_ACCESS_KEY_ID === 'your-access-key' || !process.env.S3_ACCESS_KEY_ID);
+  (!process.env.CLOUDINARY_CLOUD_NAME || process.env.CLOUDINARY_CLOUD_NAME === 'your-cloud-name');
 
 let s3;
 let mockMode = false;
@@ -13,7 +13,6 @@ if (isDevelopment) {
   mockMode = true;
   
   // For development, we'll use a simple approach that stores files locally
-  // and returns localhost URLs that actually work
   const fs = require('fs');
   const path = require('path');
   const crypto = require('crypto');
@@ -66,16 +65,9 @@ if (isDevelopment) {
     }
   };
 } else {
-  // Configure AWS SDK for S3-compatible storage
-  const s3Config = {
-    endpoint: process.env.S3_ENDPOINT,
-    accessKeyId: process.env.S3_ACCESS_KEY_ID,
-    secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,
-    region: process.env.S3_REGION,
-    s3ForcePathStyle: true, // Required for DigitalOcean Spaces and MinIO
-  };
-
-  s3 = new AWS.S3(s3Config);
+  console.log('🔧 Using Cloudinary for file storage');
+  // Use Cloudinary instead of AWS S3
+  s3 = cloudinary;
 }
 
 // Generate signed URL for upload
