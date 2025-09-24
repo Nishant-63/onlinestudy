@@ -124,12 +124,14 @@ const generateSignedDownloadUrl = (key, expiresIn = 3600) => {
 
   // For production, determine resource type based on file extension
   const fileExtension = key.split('.').pop().toLowerCase();
-  let resourceType = 'image'; // default for PDFs and other files
+  let resourceType = 'raw'; // default for PDFs and other documents
   
   if (['mp4', 'mov', 'avi', 'mkv', 'webm'].includes(fileExtension)) {
     resourceType = 'video';
   } else if (['mp3', 'wav', 'aac', 'ogg'].includes(fileExtension)) {
     resourceType = 'video'; // Cloudinary uses 'video' for audio too
+  } else if (['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg'].includes(fileExtension)) {
+    resourceType = 'image';
   }
 
   return `https://res.cloudinary.com/${process.env.CLOUDINARY_CLOUD_NAME}/${resourceType}/upload/${key}`;

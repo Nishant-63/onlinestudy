@@ -502,6 +502,12 @@
   margin-top: var(--space-4);
 }
 
+.assignment-actions {
+  display: flex;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
 .assignment-preview {
   margin-top: var(--space-4);
   border-radius: var(--radius);

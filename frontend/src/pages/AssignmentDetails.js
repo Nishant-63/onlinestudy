@@ -82,15 +82,30 @@ const AssignmentDetails = () => {
               </div>
               {assignment.downloadUrl ? (
                 <div className="assignment-viewer">
-                  <button 
-                    onClick={() => window.open(assignment.downloadUrl, '_blank')} 
-                    className="btn btn-primary"
-                  >
-                    View Assignment
-                  </button>
+                  <div className="assignment-actions">
+                    <button 
+                      onClick={() => window.open(assignment.downloadUrl, '_blank')} 
+                      className="btn btn-primary"
+                    >
+                      View Assignment in New Tab
+                    </button>
+                    <button 
+                      onClick={() => {
+                        const link = document.createElement('a');
+                        link.href = assignment.downloadUrl;
+                        link.download = `${assignment.title}.pdf`;
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
+                      }}
+                      className="btn btn-outline"
+                    >
+                      Download PDF
+                    </button>
+                  </div>
                   <div className="assignment-preview">
                     <iframe
-                      src={assignment.downloadUrl}
+                      src={`${assignment.downloadUrl}#toolbar=1&navpanes=1&scrollbar=1`}
                       width="100%"
                       height="600px"
                       style={{ border: '1px solid #ddd', borderRadius: '8px' }}
