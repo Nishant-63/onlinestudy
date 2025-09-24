@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { classesAPI, videosAPI, assignmentsAPI } from '../services/api';
 import { toast } from 'react-toastify';
@@ -11,6 +11,7 @@ import '../components/modals/Modal.css';
 
 const ClassDetails = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const { user } = useAuth();
   const [classData, setClassData] = useState(null);
   const [videos, setVideos] = useState([]);
@@ -78,7 +79,7 @@ const ClassDetails = () => {
   };
 
   const handleVideoClick = (videoId) => {
-    window.open(`/video/${videoId}`, '_blank');
+    navigate(`/video/${videoId}`);
   };
 
   if (loading) {
@@ -288,14 +289,20 @@ const ClassDetails = () => {
                       <p className="assignment-description">{assignment.description}</p>
                       <div className="assignment-actions">
                         {assignment.downloadUrl ? (
-                          <a
-                            href={assignment.downloadUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
+                          <button
+                            onClick={() => {
+                              const link = document.createElement('a');
+                              link.href = assignment.downloadUrl;
+                              link.download = `${assignment.title}.pdf`;
+                              link.target = '_self';
+                              document.body.appendChild(link);
+                              link.click();
+                              document.body.removeChild(link);
+                            }}
                             className="btn btn-outline"
                           >
                             Download
-                          </a>
+                          </button>
                         ) : (
                           <button className="btn btn-outline" disabled>
                             No File

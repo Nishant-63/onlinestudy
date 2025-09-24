@@ -37,7 +37,14 @@ const AssignmentDetails = () => {
   const handleDownload = () => {
     if (assignment?.downloadUrl) {
       console.log('Downloading assignment:', assignment.downloadUrl);
-      window.open(assignment.downloadUrl, '_blank');
+      // Create a temporary link element to trigger download without opening new tab
+      const link = document.createElement('a');
+      link.href = assignment.downloadUrl;
+      link.download = `${assignment.title}.pdf`;
+      link.target = '_self';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
     } else {
       console.error('No download URL available for assignment:', assignment);
       toast.error('Download URL not available');
