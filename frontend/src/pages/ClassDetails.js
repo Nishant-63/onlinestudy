@@ -291,17 +291,12 @@ const ClassDetails = () => {
                         {assignment.downloadUrl ? (
                           <button
                             onClick={() => {
-                              const link = document.createElement('a');
-                              link.href = assignment.downloadUrl;
-                              link.download = `${assignment.title}.pdf`;
-                              link.target = '_self';
-                              document.body.appendChild(link);
-                              link.click();
-                              document.body.removeChild(link);
+                              // Open assignment in a new tab for viewing
+                              window.open(assignment.downloadUrl, '_blank');
                             }}
                             className="btn btn-outline"
                           >
-                            Download
+                            View Assignment
                           </button>
                         ) : (
                           <button className="btn btn-outline" disabled>

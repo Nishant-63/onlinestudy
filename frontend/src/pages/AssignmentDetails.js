@@ -34,22 +34,6 @@ const AssignmentDetails = () => {
     }
   };
 
-  const handleDownload = () => {
-    if (assignment?.downloadUrl) {
-      console.log('Downloading assignment:', assignment.downloadUrl);
-      // Create a temporary link element to trigger download without opening new tab
-      const link = document.createElement('a');
-      link.href = assignment.downloadUrl;
-      link.download = `${assignment.title}.pdf`;
-      link.target = '_self';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    } else {
-      console.error('No download URL available for assignment:', assignment);
-      toast.error('Download URL not available');
-    }
-  };
 
   if (loading) {
     return (
@@ -97,9 +81,23 @@ const AssignmentDetails = () => {
                 <span>{(assignment.file_size / (1024 * 1024)).toFixed(1)} MB</span>
               </div>
               {assignment.downloadUrl ? (
-                <button onClick={handleDownload} className="btn btn-primary">
-                  Download Assignment
-                </button>
+                <div className="assignment-viewer">
+                  <button 
+                    onClick={() => window.open(assignment.downloadUrl, '_blank')} 
+                    className="btn btn-primary"
+                  >
+                    View Assignment
+                  </button>
+                  <div className="assignment-preview">
+                    <iframe
+                      src={assignment.downloadUrl}
+                      width="100%"
+                      height="600px"
+                      style={{ border: '1px solid #ddd', borderRadius: '8px' }}
+                      title={`Assignment: ${assignment.title}`}
+                    />
+                  </div>
+                </div>
               ) : (
                 <button className="btn btn-primary" disabled>
                   File Not Available

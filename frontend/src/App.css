@@ -497,6 +497,24 @@
   transition: width 0.1s ease;
 }
 
+/* Assignment Viewer Styles */
+.assignment-viewer {
+  margin-top: var(--space-4);
+}
+
+.assignment-preview {
+  margin-top: var(--space-4);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.assignment-preview iframe {
+  display: block;
+  border: none;
+  background: white;
+}
+
 /* Modern Assignment Cards */
 .assignment-card {
   background: white;
