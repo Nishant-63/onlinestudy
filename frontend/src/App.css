@@ -1235,6 +1235,15 @@
 }
 
 /* Add Student Modal Styles */
+.students-list {
+  max-height: 400px;
+  overflow-y: auto;
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius);
+  padding: var(--space-2);
+  margin-bottom: var(--space-4);
+}
+
 .students-list .student-item {
   display: flex;
   justify-content: space-between;
@@ -1245,6 +1254,7 @@
   margin-bottom: var(--space-2);
   cursor: pointer;
   transition: all 0.2s ease;
+  background: white;
 }
 
 .students-list .student-item:hover {
@@ -1269,6 +1279,59 @@
   text-align: center;
   font-weight: 500;
   margin-top: var(--space-4);
+}
+
+/* Modal footer positioning for Add Student Modal */
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-3);
+  margin-top: var(--space-6);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--gray-200);
+}
+
+/* Loading and empty states for students list */
+.students-list .loading,
+.students-list .empty-state {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: var(--space-8);
+  color: var(--gray-500);
+}
+
+.spinner {
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--gray-200);
+  border-top: 2px solid var(--primary-500);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Responsive styles for Add Student Modal */
+@media (max-width: 640px) {
+  .students-list {
+    max-height: 300px;
+  }
+  
+  .students-list .student-item {
+    padding: var(--space-3);
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-2);
+  }
+  
+  .student-checkbox {
+    margin-left: 0;
+    align-self: flex-end;
+  }
 }
 
 /* Enhanced Responsive Design */
