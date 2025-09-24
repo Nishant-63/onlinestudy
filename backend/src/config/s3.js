@@ -122,8 +122,17 @@ const generateSignedDownloadUrl = (key, expiresIn = 3600) => {
     return `http://localhost:3001/uploads/${key}`;
   }
 
-  // For production, return Cloudinary URL
-  return `https://res.cloudinary.com/${process.env.CLOUDINARY_CLOUD_NAME}/video/upload/${key}`;
+  // For production, determine resource type based on file extension
+  const fileExtension = key.split('.').pop().toLowerCase();
+  let resourceType = 'image'; // default for PDFs and other files
+  
+  if (['mp4', 'mov', 'avi', 'mkv', 'webm'].includes(fileExtension)) {
+    resourceType = 'video';
+  } else if (['mp3', 'wav', 'aac', 'ogg'].includes(fileExtension)) {
+    resourceType = 'video'; // Cloudinary uses 'video' for audio too
+  }
+
+  return `https://res.cloudinary.com/${process.env.CLOUDINARY_CLOUD_NAME}/${resourceType}/upload/${key}`;
 };
 
 // Delete object from S3

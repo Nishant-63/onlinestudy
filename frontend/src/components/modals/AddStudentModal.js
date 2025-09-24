@@ -84,7 +84,7 @@ const AddStudentModal = ({ isOpen, onClose, onSuccess, classId }) => {
 
   return (
     <div className="modal-overlay">
-      <div className="modal-content">
+      <div className="modal add-student-modal">
         <div className="modal-header">
           <h2>Add Students to Class</h2>
           <button className="modal-close" onClick={onClose}>

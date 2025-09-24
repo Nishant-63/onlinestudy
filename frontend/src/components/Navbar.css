@@ -96,7 +96,8 @@
   transform: translateY(-1px);
 }
 
-.navbar-nav a.active {
+.navbar-nav a.active,
+.navbar-nav a[aria-current="page"] {
   color: var(--primary-600);
   background: var(--primary-100);
   box-shadow: var(--shadow-sm);

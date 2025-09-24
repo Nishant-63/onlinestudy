@@ -1236,7 +1236,7 @@
 
 /* Add Student Modal Styles */
 .students-list {
-  max-height: 400px;
+  max-height: 250px;
   overflow-y: auto;
   border: 1px solid var(--gray-200);
   border-radius: var(--radius);
@@ -1289,6 +1289,21 @@
   margin-top: var(--space-6);
   padding-top: var(--space-4);
   border-top: 1px solid var(--gray-200);
+  background: white;
+  position: sticky;
+  bottom: 0;
+  z-index: 10;
+}
+
+/* Specific styles for Add Student Modal */
+.modal.add-student-modal {
+  max-height: 80vh;
+}
+
+.modal.add-student-modal .modal-body {
+  max-height: calc(80vh - 140px);
+  overflow-y: auto;
+  padding-bottom: var(--space-4);
 }
 
 /* Loading and empty states for students list */
@@ -1318,7 +1333,7 @@
 /* Responsive styles for Add Student Modal */
 @media (max-width: 640px) {
   .students-list {
-    max-height: 300px;
+    max-height: 200px;
   }
   
   .students-list .student-item {

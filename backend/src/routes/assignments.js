@@ -128,6 +128,12 @@ router.get('/class/:classId', authenticateToken, validateUUID('classId'), valida
       [classId, limit, offset]
     );
 
+    // Add download URLs to assignments
+    const assignmentsWithDownloadUrls = result.rows.map(assignment => ({
+      ...assignment,
+      downloadUrl: assignment.file_key ? generateSignedDownloadUrl(assignment.file_key, 3600) : null
+    }));
+
     const countResult = await pool.query(
       'SELECT COUNT(*) FROM assignments WHERE class_id = $1',
       [classId]
@@ -137,7 +143,7 @@ router.get('/class/:classId', authenticateToken, validateUUID('classId'), valida
     const totalPages = Math.ceil(totalCount / limit);
 
     res.json({
-      assignments: result.rows,
+      assignments: assignmentsWithDownloadUrls,
       pagination: {
         page,
         limit,
@@ -187,8 +193,14 @@ router.get('/student', authenticateToken, requireStudent, validatePagination, as
     const totalCount = parseInt(countResult.rows[0].count);
     const totalPages = Math.ceil(totalCount / limit);
 
+    // Add download URLs to assignments
+    const assignmentsWithDownloadUrls = result.rows.map(assignment => ({
+      ...assignment,
+      downloadUrl: assignment.file_key ? generateSignedDownloadUrl(assignment.file_key, 3600) : null
+    }));
+
     res.json({
-      assignments: result.rows,
+      assignments: assignmentsWithDownloadUrls,
       pagination: {
         page,
         limit,

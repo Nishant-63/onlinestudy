@@ -287,14 +287,20 @@ const ClassDetails = () => {
                       </div>
                       <p className="assignment-description">{assignment.description}</p>
                       <div className="assignment-actions">
-                        <a
-                          href={assignment.downloadUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="btn btn-outline"
-                        >
-                          Download
-                        </a>
+                        {assignment.downloadUrl ? (
+                          <a
+                            href={assignment.downloadUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="btn btn-outline"
+                          >
+                            Download
+                          </a>
+                        ) : (
+                          <button className="btn btn-outline" disabled>
+                            No File
+                          </button>
+                        )}
                         {user.role === 'student' && (
                           <button className="btn btn-primary">
                             Submit Assignment

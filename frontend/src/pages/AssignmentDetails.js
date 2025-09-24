@@ -36,7 +36,11 @@ const AssignmentDetails = () => {
 
   const handleDownload = () => {
     if (assignment?.downloadUrl) {
+      console.log('Downloading assignment:', assignment.downloadUrl);
       window.open(assignment.downloadUrl, '_blank');
+    } else {
+      console.error('No download URL available for assignment:', assignment);
+      toast.error('Download URL not available');
     }
   };
 
@@ -78,16 +82,24 @@ const AssignmentDetails = () => {
             <p>{assignment.description}</p>
           </div>
 
-          <div className="assignment-file">
-            <h2>Assignment File</h2>
-            <div className="file-info">
-              <span>📄 {assignment.title}.pdf</span>
-              <span>{(assignment.file_size / (1024 * 1024)).toFixed(1)} MB</span>
+          {assignment.file_key && (
+            <div className="assignment-file">
+              <h2>Assignment File</h2>
+              <div className="file-info">
+                <span>📄 {assignment.title}.pdf</span>
+                <span>{(assignment.file_size / (1024 * 1024)).toFixed(1)} MB</span>
+              </div>
+              {assignment.downloadUrl ? (
+                <button onClick={handleDownload} className="btn btn-primary">
+                  Download Assignment
+                </button>
+              ) : (
+                <button className="btn btn-primary" disabled>
+                  File Not Available
+                </button>
+              )}
             </div>
-            <button onClick={handleDownload} className="btn btn-primary">
-              Download Assignment
-            </button>
-          </div>
+          )}
 
           {user.role === 'student' && (
             <div className="assignment-submission">

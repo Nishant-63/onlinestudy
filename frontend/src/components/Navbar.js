@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { Icon } from './Icons';
 import './Navbar.css';
@@ -51,43 +51,43 @@ const Navbar = () => {
           {user.role === 'teacher' ? (
             <>
               <li>
-                <Link to="/" className="nav-link">
+                <NavLink to="/" className="nav-link" end>
                   <Icon name="dashboard" size={18} style={{ marginRight: '8px' }} />
                   Dashboard
-                </Link>
+                </NavLink>
               </li>
               <li>
-                <Link to="/teacher/classes" className="nav-link">
+                <NavLink to="/teacher/classes" className="nav-link" end>
                   <Icon name="classes" size={18} style={{ marginRight: '8px' }} />
                   Classes
-                </Link>
+                </NavLink>
               </li>
               <li>
-                <Link to="/teacher/students" className="nav-link">
+                <NavLink to="/teacher/students" className="nav-link" end>
                   <Icon name="students" size={18} style={{ marginRight: '8px' }} />
                   Students
-                </Link>
+                </NavLink>
               </li>
             </>
           ) : (
             <>
               <li>
-                <Link to="/student/classes" className="nav-link">
+                <NavLink to="/student/classes" className="nav-link" end>
                   <Icon name="classes" size={18} style={{ marginRight: '8px' }} />
                   My Classes
-                </Link>
+                </NavLink>
               </li>
               <li>
-                <Link to="/student/assignments" className="nav-link">
+                <NavLink to="/student/assignments" className="nav-link" end>
                   <Icon name="assignments" size={18} style={{ marginRight: '8px' }} />
                   Assignments
-                </Link>
+                </NavLink>
               </li>
               <li>
-                <Link to="/student/attendance" className="nav-link">
+                <NavLink to="/student/attendance" className="nav-link" end>
                   <Icon name="attendance" size={18} style={{ marginRight: '8px' }} />
                   Attendance
-                </Link>
+                </NavLink>
               </li>
             </>
           )}
