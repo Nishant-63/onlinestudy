@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, NavLink, useNavigate } from 'react-router-dom';
+import { Link, NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { Icon } from './Icons';
 import './Navbar.css';
@@ -7,7 +7,19 @@ import './Navbar.css';
 const Navbar = () => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
   const [showUserMenu, setShowUserMenu] = useState(false);
+
+  const handleNavClick = (path, name) => {
+    // Force navigation using navigate instead of relying on NavLink
+    if (location.pathname !== path) {
+      navigate(path, { replace: true });
+    }
+  };
+
+  const isActive = (path) => {
+    return location.pathname === path;
+  };
 
   const handleLogout = () => {
     logout();
@@ -51,43 +63,61 @@ const Navbar = () => {
           {user.role === 'teacher' ? (
             <>
               <li>
-                <NavLink to="/" className="nav-link" end>
+                <button 
+                  className={`nav-link ${isActive('/') ? 'active' : ''}`}
+                  onClick={() => handleNavClick('/', 'Dashboard')}
+                >
                   <Icon name="dashboard" size={18} style={{ marginRight: '8px' }} />
                   Dashboard
-                </NavLink>
+                </button>
               </li>
               <li>
-                <NavLink to="/teacher/classes" className="nav-link" end>
+                <button 
+                  className={`nav-link ${isActive('/teacher/classes') ? 'active' : ''}`}
+                  onClick={() => handleNavClick('/teacher/classes', 'Classes')}
+                >
                   <Icon name="classes" size={18} style={{ marginRight: '8px' }} />
                   Classes
-                </NavLink>
+                </button>
               </li>
               <li>
-                <NavLink to="/teacher/students" className="nav-link" end>
+                <button 
+                  className={`nav-link ${isActive('/teacher/students') ? 'active' : ''}`}
+                  onClick={() => handleNavClick('/teacher/students', 'Students')}
+                >
                   <Icon name="students" size={18} style={{ marginRight: '8px' }} />
                   Students
-                </NavLink>
+                </button>
               </li>
             </>
           ) : (
             <>
               <li>
-                <NavLink to="/student/classes" className="nav-link" end>
+                <button 
+                  className={`nav-link ${isActive('/student/classes') ? 'active' : ''}`}
+                  onClick={() => handleNavClick('/student/classes', 'My Classes')}
+                >
                   <Icon name="classes" size={18} style={{ marginRight: '8px' }} />
                   My Classes
-                </NavLink>
+                </button>
               </li>
               <li>
-                <NavLink to="/student/assignments" className="nav-link" end>
+                <button 
+                  className={`nav-link ${isActive('/student/assignments') ? 'active' : ''}`}
+                  onClick={() => handleNavClick('/student/assignments', 'Assignments')}
+                >
                   <Icon name="assignments" size={18} style={{ marginRight: '8px' }} />
                   Assignments
-                </NavLink>
+                </button>
               </li>
               <li>
-                <NavLink to="/student/attendance" className="nav-link" end>
+                <button 
+                  className={`nav-link ${isActive('/student/attendance') ? 'active' : ''}`}
+                  onClick={() => handleNavClick('/student/attendance', 'Attendance')}
+                >
                   <Icon name="attendance" size={18} style={{ marginRight: '8px' }} />
                   Attendance
-                </NavLink>
+                </button>
               </li>
             </>
           )}
