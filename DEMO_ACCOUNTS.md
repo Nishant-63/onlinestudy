@@ -65,9 +65,10 @@ These students need teacher approval to access the platform. Password: `student1
 ## 🚀 **How to Test**
 
 ### **1. Access the Platform**
-- **URL**: http://localhost:3000
+- **URL**: https://onlinestudy-frontend.onrender.com (deployed)
 - **Frontend**: React application with modern UI
-- **Backend**: Node.js/Express API at http://localhost:5001
+- **Backend**: Node.js/Express API at https://onlinestudy-backend-4u8y.onrender.com
+- **Local Development**: http://localhost:3000 (frontend) / http://localhost:5000 (backend)
 
 ### **2. Test Teacher Features**
 1. **Login** as any teacher account

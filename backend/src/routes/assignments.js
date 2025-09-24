@@ -13,6 +13,9 @@ router.post('/upload', authenticateToken, requireTeacher, validateAssignmentUplo
     const { title, description, classId, dueDate } = req.body;
     const { id: teacherId } = req.user;
 
+    // Check file size limit (50MB for assignments)
+    const maxFileSize = 50 * 1024 * 1024; // 50MB in bytes
+
     // Verify class exists and belongs to teacher
     const classResult = await pool.query(
       'SELECT id FROM classes WHERE id = $1 AND teacher_id = $2',
@@ -56,6 +59,12 @@ router.post('/:id/complete-upload', authenticateToken, requireTeacher, validateU
     const { id } = req.params;
     const { fileSize } = req.body;
     const { id: teacherId } = req.user;
+
+    // Validate file size (50MB limit for assignments)
+    const maxFileSize = 50 * 1024 * 1024; // 50MB in bytes
+    if (fileSize && fileSize > maxFileSize) {
+      return res.status(400).json({ error: 'File size exceeds 50MB limit' });
+    }
 
     // Verify assignment exists and belongs to teacher
     const assignmentResult = await pool.query(

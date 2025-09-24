@@ -11,6 +11,7 @@ const videoRoutes = require('./routes/videos');
 const assignmentRoutes = require('./routes/assignments');
 const attendanceRoutes = require('./routes/attendance');
 const remarkRoutes = require('./routes/remarks');
+const setupRoutes = require('./routes/setup');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -55,6 +56,7 @@ app.use('/api/videos', videoRoutes);
 app.use('/api/assignments', assignmentRoutes);
 app.use('/api/attendance', attendanceRoutes);
 app.use('/api/remarks', remarkRoutes);
+app.use('/api/setup', setupRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {

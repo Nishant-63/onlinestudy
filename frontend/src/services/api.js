@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Create axios instance
 const api = axios.create({
-  baseURL: process.env.REACT_APP_API_URL || 'http://localhost:3001/api',
+  baseURL: process.env.REACT_APP_API_URL || 'https://onlinestudy-backend-4u8y.onrender.com/api',
   timeout: 30000, // 30 seconds timeout
 });
 

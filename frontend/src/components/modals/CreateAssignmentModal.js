@@ -10,6 +10,8 @@ const CreateAssignmentModal = ({ isOpen, onClose, onSuccess }) => {
     description: '',
     dueDate: ''
   });
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [uploadProgress, setUploadProgress] = useState(0);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -28,6 +30,55 @@ const CreateAssignmentModal = ({ isOpen, onClose, onSuccess }) => {
     }
   };
 
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      // Check file type
+      if (file.type !== 'application/pdf') {
+        toast.error('Please select a PDF file');
+        return;
+      }
+      
+      // Check file size (50MB = 50 * 1024 * 1024 bytes)
+      const maxSize = 50 * 1024 * 1024;
+      if (file.size > maxSize) {
+        toast.error('File size must be less than 50MB');
+        return;
+      }
+      
+      setSelectedFile(file);
+    }
+  };
+
+  const uploadFileToS3 = async (uploadUrl, file) => {
+    return new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      
+      xhr.upload.addEventListener('progress', (e) => {
+        if (e.lengthComputable) {
+          const percentComplete = (e.loaded / e.total) * 100;
+          setUploadProgress(percentComplete);
+        }
+      });
+      
+      xhr.addEventListener('load', () => {
+        if (xhr.status === 200) {
+          resolve();
+        } else {
+          reject(new Error('Upload failed'));
+        }
+      });
+      
+      xhr.addEventListener('error', () => {
+        reject(new Error('Upload failed'));
+      });
+      
+      xhr.open('PUT', uploadUrl);
+      xhr.setRequestHeader('Content-Type', 'application/pdf');
+      xhr.send(file);
+    });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.classId || !formData.title.trim()) {
@@ -37,8 +88,9 @@ const CreateAssignmentModal = ({ isOpen, onClose, onSuccess }) => {
 
     try {
       setLoading(true);
+      setUploadProgress(0);
       
-      // Create assignment
+      // Create assignment and get upload URL
       const response = await assignmentsAPI.upload({
         classId: formData.classId,
         title: formData.title,
@@ -46,15 +98,29 @@ const CreateAssignmentModal = ({ isOpen, onClose, onSuccess }) => {
         dueDate: formData.dueDate && formData.dueDate.trim() !== '' ? formData.dueDate : null
       });
       
+      // If file is selected, upload it
+      if (selectedFile) {
+        await uploadFileToS3(response.data.uploadUrl, selectedFile);
+        
+        // Complete the upload
+        await assignmentsAPI.completeUpload(response.data.assignmentId, {
+          fileSize: selectedFile.size,
+          fileName: selectedFile.name
+        });
+      }
+      
       toast.success('Assignment created successfully!');
       onSuccess();
       onClose();
       setFormData({ classId: '', title: '', description: '', dueDate: '' });
+      setSelectedFile(null);
+      setUploadProgress(0);
     } catch (error) {
       console.error('Failed to create assignment:', error);
       toast.error('Failed to create assignment');
     } finally {
       setLoading(false);
+      setUploadProgress(0);
     }
   };
 
@@ -131,16 +197,36 @@ const CreateAssignmentModal = ({ isOpen, onClose, onSuccess }) => {
           </div>
           
           <div className="form-group">
-            <label htmlFor="assignmentFile">Assignment File</label>
+            <label htmlFor="assignmentFile">Assignment File (PDF, up to 50MB)</label>
             <input
               type="file"
               id="assignmentFile"
               name="assignmentFile"
-              accept=".pdf,.doc,.docx"
-              disabled
+              accept=".pdf"
+              onChange={handleFileChange}
             />
+            {selectedFile && (
+              <div className="file-info">
+                <small className="text-green-600">
+                  ✓ Selected: {selectedFile.name} ({(selectedFile.size / (1024 * 1024)).toFixed(2)} MB)
+                </small>
+              </div>
+            )}
+            {uploadProgress > 0 && uploadProgress < 100 && (
+              <div className="upload-progress">
+                <div className="progress-bar">
+                  <div 
+                    className="progress-fill" 
+                    style={{ width: `${uploadProgress}%` }}
+                  ></div>
+                </div>
+                <small className="text-blue-600">
+                  Uploading... {uploadProgress.toFixed(1)}%
+                </small>
+              </div>
+            )}
             <small className="text-gray-500">
-              File upload will be implemented in the next phase
+              Optional: Upload a PDF file (maximum 50MB)
             </small>
           </div>
           

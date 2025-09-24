@@ -64,7 +64,7 @@ npm install
 # Create frontend .env file
 echo "📝 Creating frontend environment file..."
 cat > .env << EOF
-REACT_APP_API_URL=http://localhost:5000/api
+REACT_APP_API_URL=https://onlinestudy-backend-4u8y.onrender.com/api
 EOF
 
 cd ..
@@ -90,8 +90,9 @@ echo "1. Start backend: cd backend && npm run dev"
 echo "2. Start frontend: cd frontend && npm start"
 echo ""
 echo "The application will be available at:"
-echo "   Frontend: http://localhost:3000"
-echo "   Backend API: http://localhost:5000"
+echo "   Frontend: https://onlinestudy-frontend.onrender.com (deployed)"
+echo "   Backend API: https://onlinestudy-backend-4u8y.onrender.com (deployed)"
+echo "   Local Development: http://localhost:3000 (frontend) / http://localhost:5000 (backend)"
 echo ""
 echo "Sample accounts:"
 echo "   Teacher: teacher@onlinestudy.com / teacher123"

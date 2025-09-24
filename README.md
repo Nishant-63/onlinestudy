@@ -78,8 +78,9 @@ A comprehensive full-stack web application for teacher-led online education with
    ```
 
 4. **Access the application**
-   - Frontend: http://localhost:3000
-   - Backend API: http://localhost:5000
+   - Frontend: https://onlinestudy-frontend.onrender.com (deployed)
+   - Backend API: https://onlinestudy-backend-4u8y.onrender.com (deployed)
+   - Local Development: http://localhost:3000 (frontend) / http://localhost:5000 (backend)
    - MinIO Console: http://localhost:9001 (minioadmin/minioadmin123)
 
 ### Manual Setup
