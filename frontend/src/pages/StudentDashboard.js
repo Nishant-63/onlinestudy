@@ -72,19 +72,19 @@ const StudentDashboard = () => {
         {/* Stats Cards */}
         <div className="dashboard-stats">
           <div className="stat-card">
-            <h3>Enrolled Classes</h3>
+            <h3><span className="stat-card-icon stat-card-icon--blue"><Icon name="classes" size={20} /></span>Enrolled Classes</h3>
             <div className="value">{stats.enrolledClasses}</div>
           </div>
           <div className="stat-card">
-            <h3>Total Videos</h3>
+            <h3><span className="stat-card-icon stat-card-icon--violet"><Icon name="videos" size={20} /></span>Total Videos</h3>
             <div className="value">{stats.totalVideos}</div>
           </div>
           <div className="stat-card">
-            <h3>Pending Assignments</h3>
+            <h3><span className="stat-card-icon stat-card-icon--amber"><Icon name="assignments" size={20} /></span>Pending Assignments</h3>
             <div className="value">{stats.pendingAssignments}</div>
           </div>
           <div className="stat-card">
-            <h3>Completed Assignments</h3>
+            <h3><span className="stat-card-icon stat-card-icon--green"><Icon name="assignments" size={20} /></span>Completed Assignments</h3>
             <div className="value">{stats.completedAssignments}</div>
           </div>
         </div>
@@ -194,7 +194,7 @@ const StudentDashboard = () => {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
               <Link to="/student/classes" className="quick-action-card">
-                <div className="quick-action-icon"><Icon name="classes" size={24} /></div>
+                <div className="quick-action-icon-wrap"><Icon name="classes" size={24} className="quick-action-icon" /></div>
                 <div className="quick-action-title">My Classes</div>
                 <div className="quick-action-description">
                   View all your enrolled classes
@@ -202,7 +202,7 @@ const StudentDashboard = () => {
               </Link>
               
               <Link to="/student/assignments" className="quick-action-card">
-                <div className="quick-action-icon"><Icon name="assignments" size={24} /></div>
+                <div className="quick-action-icon-wrap"><Icon name="assignments" size={24} className="quick-action-icon" /></div>
                 <div className="quick-action-title">Assignments</div>
                 <div className="quick-action-description">
                   View and submit assignments
@@ -210,7 +210,7 @@ const StudentDashboard = () => {
               </Link>
               
               <Link to="/student/attendance" className="quick-action-card">
-                <div className="quick-action-icon"><Icon name="attendance" size={24} /></div>
+                <div className="quick-action-icon-wrap"><Icon name="attendance" size={24} className="quick-action-icon" /></div>
                 <div className="quick-action-title">Attendance</div>
                 <div className="quick-action-description">
                   Check your attendance records
@@ -218,7 +218,7 @@ const StudentDashboard = () => {
               </Link>
               
               <Link to="/student/remarks" className="quick-action-card">
-                <div className="quick-action-icon"><Icon name="chat" size={24} /></div>
+                <div className="quick-action-icon-wrap"><Icon name="chat" size={24} className="quick-action-icon" /></div>
                 <div className="quick-action-title">Teacher Remarks</div>
                 <div className="quick-action-description">
                   View teacher feedback
