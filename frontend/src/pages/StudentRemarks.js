@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import { Icon } from '../components/Icons';
 
 const StudentRemarks = () => {
-  const { user } = useAuth();
+  useAuth();
   const [remarks, setRemarks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [stats, setStats] = useState({
@@ -17,8 +17,8 @@ const StudentRemarks = () => {
   const [classes, setClasses] = useState([]);
 
   useEffect(() => {
-    console.log('🎯 StudentRemarks component mounted');
     loadRemarks();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const loadRemarks = async () => {

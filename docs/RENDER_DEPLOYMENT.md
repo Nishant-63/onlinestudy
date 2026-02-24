@@ -176,4 +176,3 @@ After backend is deployed, you may need to run database migrations:
 - Enable HTTPS (automatic on Render)
 - Regularly rotate AWS credentials
 - Monitor usage and upgrade when needed
-

@@ -120,9 +120,23 @@ const Login = () => {
                   <button
                     type="button"
                     className="demo-account-btn"
-                    onClick={() => handleDemoAccountClick('teacher@onlinestudy.com', 'teacher123')}
+                    onClick={() => handleDemoAccountClick('john.doe@onlinestudy.com', 'teacher123')}
                   >
-                    John Doe (Teacher)
+                    John Doe
+                  </button>
+                  <button
+                    type="button"
+                    className="demo-account-btn"
+                    onClick={() => handleDemoAccountClick('sarah.smith@onlinestudy.com', 'teacher123')}
+                  >
+                    Sarah Smith
+                  </button>
+                  <button
+                    type="button"
+                    className="demo-account-btn"
+                    onClick={() => handleDemoAccountClick('mike.johnson@onlinestudy.com', 'teacher123')}
+                  >
+                    Mike Johnson
                   </button>
                 </div>
               </div>
@@ -133,23 +147,37 @@ const Login = () => {
                   <button
                     type="button"
                     className="demo-account-btn"
-                    onClick={() => handleDemoAccountClick('student1@onlinestudy.com', 'student123')}
+                    onClick={() => handleDemoAccountClick('alice.student@onlinestudy.com', 'student123')}
                   >
-                    Student 1
+                    Alice Williams
                   </button>
                   <button
                     type="button"
                     className="demo-account-btn"
-                    onClick={() => handleDemoAccountClick('student2@onlinestudy.com', 'student123')}
+                    onClick={() => handleDemoAccountClick('bob.student@onlinestudy.com', 'student123')}
                   >
-                    Student 2
+                    Bob Brown
                   </button>
                   <button
                     type="button"
                     className="demo-account-btn"
-                    onClick={() => handleDemoAccountClick('student3@onlinestudy.com', 'student123')}
+                    onClick={() => handleDemoAccountClick('carol.student@onlinestudy.com', 'student123')}
                   >
-                    Student 3
+                    Carol Davis
+                  </button>
+                  <button
+                    type="button"
+                    className="demo-account-btn"
+                    onClick={() => handleDemoAccountClick('david.student@onlinestudy.com', 'student123')}
+                  >
+                    David Miller
+                  </button>
+                  <button
+                    type="button"
+                    className="demo-account-btn"
+                    onClick={() => handleDemoAccountClick('emma.student@onlinestudy.com', 'student123')}
+                  >
+                    Emma Wilson
                   </button>
                 </div>
               </div>

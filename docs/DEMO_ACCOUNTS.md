@@ -136,8 +136,7 @@ These students need teacher approval to access the platform. Password: `student1
 ## 🎯 **Quick Start Commands**
 
 ```bash
-# Start the platform
-cd /Users/nishantpuri/Desktop/onlinestudy
+# From project root - start the platform
 docker-compose up -d
 
 # Check status

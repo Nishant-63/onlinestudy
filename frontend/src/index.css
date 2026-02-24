@@ -28,14 +28,44 @@
   --gray-800: #262626;
   --gray-900: #171717;
 
+  --success-50: #ecfdf5;
+  --success-100: #d1fae5;
+  --success-200: #a7f3d0;
   --success-500: #10b981;
   --success-600: #059669;
+  --success-700: #047857;
 
+  --warning-50: #fffbeb;
+  --warning-100: #fef3c7;
+  --warning-200: #fde68a;
   --warning-500: #f59e0b;
   --warning-600: #d97706;
+  --warning-700: #b45309;
 
+  --error-50: #fef2f2;
+  --error-100: #fee2e2;
+  --error-200: #fecaca;
   --error-500: #ef4444;
   --error-600: #dc2626;
+  --error-700: #b91c1c;
+
+  --info-100: #dbeafe;
+  --info-200: #bfdbfe;
+  --info-500: #3b82f6;
+  --info-600: #2563eb;
+  --info-700: #1d4ed8;
+
+  --blue-50: #eff6ff;
+  --blue-100: #dbeafe;
+  --blue-200: #bfdbfe;
+  --blue-500: #3b82f6;
+  --blue-600: #2563eb;
+  --blue-700: #1d4ed8;
+
+  --orange-100: #ffedd5;
+  --orange-200: #fed7aa;
+  --orange-700: #c2410c;
+  --accent-500: var(--primary-500);
 
   /* Spacing */
   --space-1: 0.25rem;
@@ -135,7 +165,8 @@ body {
   line-height: var(--leading-normal);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: var(--gray-50);
+  background: linear-gradient(160deg, var(--gray-50) 0%, var(--primary-50) 50%, var(--gray-50) 100%);
+  background-attachment: fixed;
   color: var(--gray-900);
   min-height: 100vh;
   overflow-x: hidden;
@@ -202,15 +233,19 @@ code {
 }
 
 .btn-primary {
-  background: var(--primary-600);
+  background: linear-gradient(135deg, var(--primary-600) 0%, var(--primary-700) 100%);
   color: white;
   box-shadow: var(--shadow);
 }
 
 .btn-primary:hover:not(:disabled) {
-  background: var(--primary-700);
+  background: linear-gradient(135deg, var(--primary-500) 0%, var(--primary-600) 100%);
   transform: translateY(-1px);
   box-shadow: var(--shadow-md);
+}
+
+.btn-primary:active:not(:disabled) {
+  transform: translateY(0);
 }
 
 .btn-primary:active:not(:disabled) {
@@ -291,12 +326,14 @@ code {
 
 /* Minimalist Professional Card System */
 .card {
-  background: white;
-  border-radius: var(--radius-xl);
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: var(--radius-2xl);
   box-shadow: var(--shadow);
   padding: var(--space-8);
   margin-bottom: var(--space-6);
-  border: 1px solid var(--gray-200);
+  border: 1px solid rgba(255, 255, 255, 0.6);
   transition: var(--transition-all);
   position: relative;
   overflow: hidden;
@@ -317,6 +354,7 @@ code {
   transform: translateY(-2px);
   box-shadow: var(--shadow-lg);
   border-color: var(--gray-300);
+  background: white;
 }
 
 .card-header {
@@ -389,16 +427,22 @@ code {
 .form-select:focus {
   outline: none;
   border-color: var(--primary-500);
-  box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.1);
-  transform: translateY(-2px);
+  box-shadow: 0 0 0 4px rgba(71, 85, 105, 0.12);
   background: white;
+}
+
+.form-input:focus-visible,
+.form-textarea:focus-visible,
+.form-select:focus-visible {
+  outline: none;
+  border-color: var(--primary-500);
+  box-shadow: 0 0 0 4px rgba(71, 85, 105, 0.12);
 }
 
 .form-input:hover,
 .form-textarea:hover,
 .form-select:hover {
   border-color: var(--primary-300);
-  transform: translateY(-1px);
 }
 
 .form-textarea {
@@ -496,7 +540,7 @@ code {
   right: -4px;
   bottom: -4px;
   border: 2px solid transparent;
-  border-top: 2px solid var(--accent-500);
+  border-top: 2px solid var(--primary-400);
   border-radius: 50%;
   animation: spin 1.5s linear infinite reverse;
 }
@@ -568,8 +612,17 @@ code {
   color: var(--gray-600);
 }
 
+.table tbody tr {
+  transition: background 0.15s ease;
+}
+
 .table tbody tr:hover {
   background: var(--gray-50);
+}
+
+.table-container {
+  border-radius: var(--radius-xl);
+  overflow: hidden;
 }
 
 /* Modern Status Badges */

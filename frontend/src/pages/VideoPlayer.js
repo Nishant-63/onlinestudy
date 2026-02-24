@@ -9,15 +9,16 @@ const VideoPlayer = () => {
   const { user } = useAuth();
   const [video, setVideo] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
-  const [progress, setProgress] = useState(0);
+  const [, setProgress] = useState(0);
   const videoRef = useRef(null);
   const lastTrackedTime = useRef(0);
 
   useEffect(() => {
     loadVideo();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   useEffect(() => {
@@ -32,6 +33,7 @@ const VideoPlayer = () => {
         trackVideoView('complete');
       }
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [video, user.role]);
 
   const loadVideo = async () => {
@@ -75,17 +77,6 @@ const VideoPlayer = () => {
       videoRef.current.pause();
       setIsPlaying(false);
       trackVideoView('pause');
-    }
-  };
-
-  const handleSeek = (e) => {
-    if (videoRef.current) {
-      const rect = e.currentTarget.getBoundingClientRect();
-      const clickX = e.clientX - rect.left;
-      const newTime = (clickX / rect.width) * duration;
-      videoRef.current.currentTime = newTime;
-      setCurrentTime(newTime);
-      trackVideoView('seek');
     }
   };
 

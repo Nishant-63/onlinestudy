@@ -120,14 +120,21 @@ CREATE TABLE IF NOT EXISTS video_jobs (
     completed_at TIMESTAMP WITH TIME ZONE
 );
 
--- Indexes for better performance
+-- Indexes for better performance (deterministic query patterns)
 CREATE INDEX IF NOT EXISTS idx_users_email ON users(email);
 CREATE INDEX IF NOT EXISTS idx_users_role ON users(role);
 CREATE INDEX IF NOT EXISTS idx_users_status ON users(status);
+CREATE INDEX IF NOT EXISTS idx_classes_teacher_id ON classes(teacher_id);
+CREATE INDEX IF NOT EXISTS idx_class_enrollments_class_id ON class_enrollments(class_id);
+CREATE INDEX IF NOT EXISTS idx_class_enrollments_student_id ON class_enrollments(student_id);
+CREATE INDEX IF NOT EXISTS idx_videos_class_id ON videos(class_id);
 CREATE INDEX IF NOT EXISTS idx_video_views_video_id ON video_views(video_id);
 CREATE INDEX IF NOT EXISTS idx_video_views_student_id ON video_views(student_id);
+CREATE INDEX IF NOT EXISTS idx_assignments_class_id ON assignments(class_id);
 CREATE INDEX IF NOT EXISTS idx_attendance_class_date ON attendance(class_id, date);
 CREATE INDEX IF NOT EXISTS idx_attendance_student_date ON attendance(student_id, date);
+CREATE INDEX IF NOT EXISTS idx_remarks_student_id ON remarks(student_id);
+CREATE INDEX IF NOT EXISTS idx_remarks_class_id ON remarks(class_id);
 CREATE INDEX IF NOT EXISTS idx_video_jobs_status ON video_jobs(status);
 CREATE INDEX IF NOT EXISTS idx_video_jobs_video_id ON video_jobs(video_id);
 

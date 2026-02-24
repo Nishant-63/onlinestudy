@@ -75,7 +75,7 @@ const UploadVideoModal = ({ isOpen, onClose, onSuccess }) => {
 
     console.log('📤 Sending upload request to /api/videos/upload-file');
 
-    const response = await fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:3001/api'}/videos/upload-file`, {
+    const response = await fetch(`${process.env.REACT_APP_API_URL || 'https://onlinestudy-backend-4u8y.onrender.com/api'}/videos/upload-file`, {
       method: 'POST',
       body: formData,
     });

@@ -15,6 +15,7 @@ const ClassesOverview = () => {
 
   useEffect(() => {
     loadClasses();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const loadClasses = async () => {

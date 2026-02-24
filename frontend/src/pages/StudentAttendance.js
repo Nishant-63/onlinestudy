@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import { Icon } from '../components/Icons';
 
 const StudentAttendance = () => {
-  const { user } = useAuth();
+  useAuth();
   const [attendance, setAttendance] = useState([]);
   const [loading, setLoading] = useState(true);
   const [stats, setStats] = useState({
@@ -20,6 +20,7 @@ const StudentAttendance = () => {
 
   useEffect(() => {
     loadAttendance();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const loadAttendance = async () => {

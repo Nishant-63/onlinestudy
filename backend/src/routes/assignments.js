@@ -123,7 +123,7 @@ router.get('/class/:classId', authenticateToken, validateUUID('classId'), valida
        FROM assignments a
        JOIN users u ON a.teacher_id = u.id
        WHERE a.class_id = $1
-       ORDER BY a.created_at DESC
+       ORDER BY a.created_at DESC, a.id DESC
        LIMIT $2 OFFSET $3`,
       [classId, limit, offset]
     );
@@ -177,7 +177,7 @@ router.get('/student', authenticateToken, requireStudent, validatePagination, as
        JOIN users u ON a.teacher_id = u.id
        LEFT JOIN assignment_submissions s ON a.id = s.assignment_id AND s.student_id = $1
        WHERE ce.student_id = $1
-       ORDER BY a.due_date ASC, a.created_at DESC
+       ORDER BY a.due_date ASC NULLS LAST, a.created_at DESC, a.id DESC
        LIMIT $2 OFFSET $3`,
       [userId, limit, offset]
     );
@@ -231,7 +231,7 @@ router.get('/student/submissions', authenticateToken, requireStudent, validatePa
        JOIN assignments a ON s.assignment_id = a.id
        JOIN classes c ON a.class_id = c.id
        WHERE s.student_id = $1
-       ORDER BY s.submitted_at DESC
+       ORDER BY s.submitted_at DESC, s.id DESC
        LIMIT $2 OFFSET $3`,
       [userId, limit, offset]
     );
@@ -286,7 +286,7 @@ router.get('/student/:studentId', authenticateToken, requireTeacher, validateUUI
        JOIN assignments a ON s.assignment_id = a.id
        JOIN classes c ON a.class_id = c.id
        WHERE s.student_id = $1
-       ORDER BY s.submitted_at DESC
+       ORDER BY s.submitted_at DESC, s.id DESC
        LIMIT $2 OFFSET $3`,
       [studentId, limit, offset]
     );
@@ -474,7 +474,7 @@ router.get('/:id/submissions', authenticateToken, requireTeacher, validateUUID('
        FROM assignment_submissions s
        JOIN users u ON s.student_id = u.id
        WHERE s.assignment_id = $1
-       ORDER BY s.submitted_at DESC
+       ORDER BY s.submitted_at DESC, s.id DESC
        LIMIT $2 OFFSET $3`,
       [assignmentId, limit, offset]
     );

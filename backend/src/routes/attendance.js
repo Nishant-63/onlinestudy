@@ -151,7 +151,7 @@ router.get('/class/:classId', authenticateToken, requireTeacher, validateUUID('c
        FROM attendance a
        JOIN users u ON a.student_id = u.id
        WHERE a.class_id = $1
-       ORDER BY a.date DESC, u.last_name, u.first_name
+       ORDER BY a.date DESC, u.last_name, u.first_name, a.id
        LIMIT $2 OFFSET $3`,
       [classId, limit, offset]
     );
@@ -231,7 +231,7 @@ router.get('/student', authenticateToken, requireStudent, validatePagination, as
        JOIN classes c ON a.class_id = c.id
        JOIN users u ON a.marked_by = u.id
        WHERE a.student_id = $1
-       ORDER BY a.date DESC
+       ORDER BY a.date DESC, a.id DESC
        LIMIT $2 OFFSET $3`,
       [userId, limit, offset]
     );

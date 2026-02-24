@@ -51,7 +51,7 @@ router.get('/teacher', authenticateToken, requireTeacher, validatePagination, as
        LEFT JOIN assignments a ON c.id = a.class_id
        WHERE c.teacher_id = $1
        GROUP BY c.id
-       ORDER BY c.created_at DESC
+       ORDER BY c.created_at DESC, c.id DESC
        LIMIT $2 OFFSET $3`,
       [userId, limit, offset]
     );
@@ -103,7 +103,7 @@ router.get('/student', authenticateToken, requireStudent, validatePagination, as
        LEFT JOIN assignments a ON c.id = a.class_id
        WHERE ce.student_id = $1
        GROUP BY c.id, u.first_name, u.last_name, ce.enrolled_at
-       ORDER BY ce.enrolled_at DESC
+       ORDER BY ce.enrolled_at DESC, c.id DESC
        LIMIT $2 OFFSET $3`,
       [userId, limit, offset]
     );
@@ -262,7 +262,7 @@ router.get('/:id/students', authenticateToken, requireTeacher, validateUUID('id'
        FROM users u
        JOIN class_enrollments ce ON u.id = ce.student_id
        WHERE ce.class_id = $1
-       ORDER BY ce.enrolled_at DESC
+       ORDER BY ce.enrolled_at DESC, u.id
        LIMIT $2 OFFSET $3`,
       [classId, limit, offset]
     );

@@ -1,4 +1,6 @@
 #!/bin/bash
+ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+cd "$ROOT"
 
 echo "🚀 Creating remaining demo accounts..."
 

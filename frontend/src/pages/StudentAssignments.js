@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 import { Icon } from '../components/Icons';
 
 const StudentAssignments = () => {
-  const { user } = useAuth();
+  useAuth();
   const [assignments, setAssignments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [uploading, setUploading] = useState({});

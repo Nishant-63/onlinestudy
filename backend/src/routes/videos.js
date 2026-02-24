@@ -292,7 +292,7 @@ router.get('/class/:classId', authenticateToken, validateUUID('classId'), valida
        FROM videos v
        JOIN users u ON v.teacher_id = u.id
        WHERE v.class_id = $1
-       ORDER BY v.created_at DESC
+       ORDER BY v.created_at DESC, v.id DESC
        LIMIT $2 OFFSET $3`,
       [classId, limit, offset]
     );
@@ -513,7 +513,7 @@ router.get('/:id/views', authenticateToken, requireTeacher, validateUUID('id'), 
        FROM video_views vv
        JOIN users u ON vv.student_id = u.id
        WHERE vv.video_id = $1
-       ORDER BY vv.first_watched_at DESC`,
+       ORDER BY vv.first_watched_at DESC, vv.id DESC`,
       [id]
     );
 

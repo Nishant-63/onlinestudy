@@ -211,13 +211,18 @@
 /* Modern Professional Main Content */
 .main-content {
   flex: 1;
-  padding: var(--space-12) var(--space-6);
-  max-width: 1400px;
+  padding: var(--space-8) var(--space-4);
+  max-width: 1280px;
   margin: 0 auto;
   width: 100%;
   position: relative;
-  background: var(--gray-50);
   min-height: calc(100vh - 80px);
+}
+
+@media (min-width: 768px) {
+  .main-content {
+    padding: var(--space-10) var(--space-6);
+  }
 }
 
 /* Modern Page Headers */
@@ -261,10 +266,11 @@
   font-weight: 700;
   color: var(--gray-900);
   margin-bottom: var(--space-4);
-  background: linear-gradient(135deg, var(--primary-600), var(--primary-800));
+  background: linear-gradient(135deg, var(--primary-600) 0%, var(--primary-800) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  letter-spacing: -0.02em;
 }
 
 .dashboard-subtitle {
@@ -283,15 +289,16 @@
 }
 
 .stat-card {
-  background: white;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px);
   padding: var(--space-8);
-  border-radius: var(--radius-xl);
+  border-radius: var(--radius-2xl);
   box-shadow: var(--shadow);
-  border: 1px solid var(--gray-200);
+  border: 1px solid rgba(255, 255, 255, 0.6);
   text-align: center;
   position: relative;
   overflow: hidden;
-  transition: var(--transition-all);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
 
 .stat-card::before {
@@ -301,14 +308,15 @@
   left: 0;
   right: 0;
   height: 3px;
-  background: var(--primary-600);
-  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  background: linear-gradient(90deg, var(--primary-500), var(--primary-600));
+  border-radius: var(--radius-2xl) var(--radius-2xl) 0 0;
 }
 
 .stat-card:hover {
-  transform: translateY(-2px);
+  transform: translateY(-3px);
   box-shadow: var(--shadow-lg);
   border-color: var(--gray-300);
+  background: white;
 }
 
 .stat-card h3 {
@@ -382,15 +390,16 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: white;
-  border: 1px solid var(--gray-200);
-  border-radius: var(--radius-xl);
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: var(--radius-2xl);
   padding: var(--space-8);
   text-align: center;
   text-decoration: none;
   color: inherit;
   box-shadow: var(--shadow);
-  transition: var(--transition-all);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
   cursor: pointer;
   width: 100%;
   position: relative;
@@ -404,10 +413,10 @@
   left: 0;
   right: 0;
   height: 3px;
-  background: var(--primary-600);
-  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  background: linear-gradient(90deg, var(--primary-500), var(--primary-600));
+  border-radius: var(--radius-2xl) var(--radius-2xl) 0 0;
   transform: scaleX(0);
-  transition: transform var(--duration-300) ease-out;
+  transition: transform 0.25s ease-out;
 }
 
 .quick-action-card:hover::before {
@@ -418,6 +427,7 @@
   transform: translateY(-4px);
   box-shadow: var(--shadow-lg);
   border-color: var(--gray-300);
+  background: white;
 }
 
 .quick-action-card:focus {
@@ -813,11 +823,16 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(6px);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1000;
+}
+
+.loading {
+  min-height: 240px;
 }
 
 /* Error States */
@@ -1235,14 +1250,22 @@
 .empty-state {
   text-align: center;
   padding: var(--space-12) var(--space-6);
-  background: var(--gray-50);
-  border-radius: var(--radius-lg);
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(8px);
+  border-radius: var(--radius-xl);
   border: 2px dashed var(--gray-300);
+  transition: var(--transition-all);
+}
+
+.empty-state:hover {
+  border-color: var(--primary-300);
+  background: rgba(255, 255, 255, 0.9);
 }
 
 .empty-icon {
   font-size: 4rem;
   margin-bottom: var(--space-4);
+  opacity: 0.7;
 }
 
 .empty-state h3 {

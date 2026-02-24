@@ -15,6 +15,7 @@ const AddStudentModal = ({ isOpen, onClose, onSuccess, classId }) => {
       loadStudents();
       loadEnrolledStudents();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen, classId]);
 
   const loadStudents = async () => {

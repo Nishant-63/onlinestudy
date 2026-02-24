@@ -1,4 +1,6 @@
 #!/bin/bash
+ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+cd "$ROOT"
 
 # OnlineStudy Minimal Setup Script (for testing without external dependencies)
 

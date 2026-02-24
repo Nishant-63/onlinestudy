@@ -4,7 +4,7 @@ import { usersAPI, assignmentsAPI } from '../services/api';
 import './StudentsOverview.css';
 
 const StudentsOverview = () => {
-  const { user } = useAuth();
+  useAuth();
   const [students, setStudents] = useState([]);
   const [selectedStudent, setSelectedStudent] = useState(null);
   const [studentAssignments, setStudentAssignments] = useState([]);

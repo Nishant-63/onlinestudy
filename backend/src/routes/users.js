@@ -16,7 +16,7 @@ router.get('/pending', authenticateToken, requireTeacher, validatePagination, as
       `SELECT id, email, first_name, last_name, role, status, created_at
        FROM users 
        WHERE role = 'student' AND status = 'pending'
-       ORDER BY created_at DESC
+       ORDER BY created_at DESC, id DESC
        LIMIT $1 OFFSET $2`,
       [limit, offset]
     );
@@ -99,7 +99,7 @@ router.get('/students', authenticateToken, requireTeacher, validatePagination, a
       `SELECT id, email, first_name, last_name, status, created_at
        FROM users 
        WHERE role = 'student'
-       ORDER BY created_at DESC
+       ORDER BY created_at DESC, id DESC
        LIMIT $1 OFFSET $2`,
       [limit, offset]
     );
@@ -164,7 +164,7 @@ router.get('/teachers', authenticateToken, requireTeacher, validatePagination, a
       `SELECT id, email, first_name, last_name, status, created_at
        FROM users 
        WHERE role = 'teacher'
-       ORDER BY created_at DESC
+       ORDER BY created_at DESC, id DESC
        LIMIT $1 OFFSET $2`,
       [limit, offset]
     );

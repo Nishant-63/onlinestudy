@@ -1,13 +1,15 @@
 /* Modern Navbar Styles */
 .navbar {
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--gray-200);
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
   padding: var(--space-4) 0;
   position: sticky;
   top: 0;
   z-index: 100;
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  transition: box-shadow 0.2s ease, background 0.2s ease;
 }
 
 .navbar-container {
@@ -105,12 +107,23 @@
   transform: translateY(-1px);
 }
 
+.nav-link {
+  display: inline-flex;
+  align-items: center;
+}
+
 .navbar-nav a.active,
 .navbar-nav a[aria-current="page"],
-.navbar-nav button.active {
-  color: var(--primary-600);
-  background: var(--primary-100);
-  box-shadow: var(--shadow-sm);
+.navbar-nav button.nav-link.active {
+  color: var(--primary-700);
+  background: linear-gradient(135deg, var(--primary-50) 0%, var(--primary-100) 100%);
+  box-shadow: 0 0 0 1px rgba(71, 85, 105, 0.15);
+  font-weight: 600;
+}
+
+.navbar-nav button.nav-link.active {
+  border-left: 3px solid var(--primary-600);
+  padding-left: calc(var(--space-3) - 3px);
 }
 
 .navbar-user {

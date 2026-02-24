@@ -49,20 +49,6 @@ const StudentDashboard = () => {
     }
   };
 
-  const getStatusBadge = (status) => {
-    const statusClasses = {
-      pending: 'status-pending',
-      approved: 'status-approved',
-      rejected: 'status-rejected'
-    };
-    
-    return (
-      <span className={`status-badge ${statusClasses[status] || 'status-pending'}`}>
-        {status}
-      </span>
-    );
-  };
-
   if (loading) {
     return (
       <div className="loading">

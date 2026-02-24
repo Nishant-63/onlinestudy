@@ -6,38 +6,21 @@ async function seedDatabase() {
   try {
     console.log('Starting database seeding...');
 
-    // Create sample teacher
-    const teacherPassword = await bcrypt.hash('teacher123', 12);
-    
-    const teacherResult = await pool.query(
-      `INSERT INTO users (id, email, password_hash, first_name, last_name, role, status)
-       VALUES ($1, $2, $3, $4, $5, $6, $7)
-       ON CONFLICT (email) DO UPDATE SET
-         password_hash = EXCLUDED.password_hash,
-         first_name = EXCLUDED.first_name,
-         last_name = EXCLUDED.last_name,
-         role = EXCLUDED.role,
-         status = EXCLUDED.status
-       RETURNING id`,
-      [uuidv4(), 'teacher@onlinestudy.com', teacherPassword, 'John', 'Doe', 'teacher', 'approved']
-    );
-    
-    const teacherId = teacherResult.rows[0].id;
+    const saltRounds = 12;
 
-    // Create sample students
-    const students = [
-      { email: 'student1@onlinestudy.com', firstName: 'Alice', lastName: 'Smith' },
-      { email: 'student2@onlinestudy.com', firstName: 'Bob', lastName: 'Johnson' },
-      { email: 'student3@onlinestudy.com', firstName: 'Carol', lastName: 'Williams' }
+    // Demo teachers (same as Login page / DEMO_ACCOUNTS.md)
+    const teachers = [
+      { email: 'john.doe@onlinestudy.com', firstName: 'John', lastName: 'Doe' },
+      { email: 'sarah.smith@onlinestudy.com', firstName: 'Sarah', lastName: 'Smith' },
+      { email: 'mike.johnson@onlinestudy.com', firstName: 'Mike', lastName: 'Johnson' }
     ];
 
-    const studentIds = [];
-    for (const student of students) {
-      const studentPassword = await bcrypt.hash('student123', 12);
-      
-      const studentResult = await pool.query(
+    let teacherId;
+    for (const t of teachers) {
+      const passwordHash = await bcrypt.hash('teacher123', saltRounds);
+      const result = await pool.query(
         `INSERT INTO users (id, email, password_hash, first_name, last_name, role, status)
-         VALUES ($1, $2, $3, $4, $5, $6, $7)
+         VALUES ($1, $2, $3, $4, $5, 'teacher', 'approved')
          ON CONFLICT (email) DO UPDATE SET
            password_hash = EXCLUDED.password_hash,
            first_name = EXCLUDED.first_name,
@@ -45,10 +28,36 @@ async function seedDatabase() {
            role = EXCLUDED.role,
            status = EXCLUDED.status
          RETURNING id`,
-        [uuidv4(), student.email, studentPassword, student.firstName, student.lastName, 'student', 'approved']
+        [uuidv4(), t.email, passwordHash, t.firstName, t.lastName]
       );
-      
-      studentIds.push(studentResult.rows[0].id);
+      if (!teacherId) teacherId = result.rows[0].id;
+    }
+
+    // Demo students (same as Login page; approved)
+    const students = [
+      { email: 'alice.student@onlinestudy.com', firstName: 'Alice', lastName: 'Williams' },
+      { email: 'bob.student@onlinestudy.com', firstName: 'Bob', lastName: 'Brown' },
+      { email: 'carol.student@onlinestudy.com', firstName: 'Carol', lastName: 'Davis' },
+      { email: 'david.student@onlinestudy.com', firstName: 'David', lastName: 'Miller' },
+      { email: 'emma.student@onlinestudy.com', firstName: 'Emma', lastName: 'Wilson' }
+    ];
+
+    const studentIds = [];
+    for (const s of students) {
+      const passwordHash = await bcrypt.hash('student123', saltRounds);
+      const result = await pool.query(
+        `INSERT INTO users (id, email, password_hash, first_name, last_name, role, status)
+         VALUES ($1, $2, $3, $4, $5, 'student', 'approved')
+         ON CONFLICT (email) DO UPDATE SET
+           password_hash = EXCLUDED.password_hash,
+           first_name = EXCLUDED.first_name,
+           last_name = EXCLUDED.last_name,
+           role = EXCLUDED.role,
+           status = EXCLUDED.status
+         RETURNING id`,
+        [uuidv4(), s.email, passwordHash, s.firstName, s.lastName]
+      );
+      studentIds.push(result.rows[0].id);
     }
 
     // Create sample class
@@ -115,11 +124,9 @@ async function seedDatabase() {
     );
 
     console.log('Database seeding completed successfully!');
-    console.log('\nSample accounts created:');
-    console.log('Teacher: teacher@onlinestudy.com / teacher123');
-    console.log('Students: student1@onlinestudy.com / student123');
-    console.log('Students: student2@onlinestudy.com / student123');
-    console.log('Students: student3@onlinestudy.com / student123');
+    console.log('\nDemo accounts (use these on the Login page):');
+    console.log('Teachers (password: teacher123): john.doe@onlinestudy.com, sarah.smith@onlinestudy.com, mike.johnson@onlinestudy.com');
+    console.log('Students (password: student123): alice.student@onlinestudy.com, bob.student@onlinestudy.com, carol.student@onlinestudy.com, david.student@onlinestudy.com, emma.student@onlinestudy.com');
 
   } catch (error) {
     console.error('Seeding failed:', error);

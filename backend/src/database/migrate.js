@@ -15,7 +15,8 @@ async function runMigrations() {
 
     console.log('Database migrations completed successfully!');
   } catch (error) {
-    console.error('Migration failed:', error);
+    console.error('[FATAL] Migration failed:', error.message);
+    if (process.env.NODE_ENV !== 'production') console.error(error.stack);
     process.exit(1);
   } finally {
     await pool.end();

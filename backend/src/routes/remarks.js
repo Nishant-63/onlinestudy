@@ -85,7 +85,7 @@ router.get('/class/:classId', authenticateToken, requireTeacher, validateUUID('c
        FROM remarks r
        LEFT JOIN users u ON r.student_id = u.id
        WHERE r.class_id = $1
-       ORDER BY r.created_at DESC
+       ORDER BY r.created_at DESC, r.id DESC
        LIMIT $2 OFFSET $3`,
       [classId, limit, offset]
     );
@@ -131,7 +131,7 @@ router.get('/student/:studentId', authenticateToken, requireTeacher, validateUUI
        FROM remarks r
        LEFT JOIN classes c ON r.class_id = c.id
        WHERE r.student_id = $1 AND r.teacher_id = $2
-       ORDER BY r.created_at DESC
+       ORDER BY r.created_at DESC, r.id DESC
        LIMIT $3 OFFSET $4`,
       [studentId, teacherId, limit, offset]
     );
@@ -178,7 +178,7 @@ router.get('/my-remarks', authenticateToken, requireStudent, validatePagination,
        LEFT JOIN classes c ON r.class_id = c.id
        JOIN users u ON r.teacher_id = u.id
        WHERE r.student_id = $1
-       ORDER BY r.created_at DESC
+       ORDER BY r.created_at DESC, r.id DESC
        LIMIT $2 OFFSET $3`,
       [userId, limit, offset]
     );
@@ -330,7 +330,7 @@ router.get('/teacher/all', authenticateToken, requireTeacher, validatePagination
        LEFT JOIN classes c ON r.class_id = c.id
        LEFT JOIN users u ON r.student_id = u.id
        WHERE r.teacher_id = $1
-       ORDER BY r.created_at DESC
+       ORDER BY r.created_at DESC, r.id DESC
        LIMIT $2 OFFSET $3`,
       [userId, limit, offset]
     );
